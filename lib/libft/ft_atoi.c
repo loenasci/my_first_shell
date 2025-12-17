@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 17:49:37 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/07/30 18:50:00 by lsarraci         ###   ########.fr       */
+/*   Updated: 2025/12/17 17:29:15 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	ft_atoi(const char *str)
 		i++;
 	if (str[i] == '-')
 	{
-			signal++;
-			i++;
+		signal++;
+		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{

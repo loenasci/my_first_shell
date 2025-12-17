@@ -8,7 +8,8 @@ BLT_DIR = builtins/
 SRC += $(BLT_DIR)exit.c
 
 LEXER_DIR = lexer/
-SRC += $(LEXER_DIR)token_utils.c
+SRC += $(LEXER_DIR)token_utils.c \
+	   $(LEXER_DIR)lexer.c
 
 PARSER_UTILS_DIR = parser/
 SRC += $(PARSER_UTILS_DIR)command_utils.c
