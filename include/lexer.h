@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:04:24 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/17 16:19:51 by lsarraci         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:15:53 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,20 @@
 
 # include "structs.h"
 
-/* Token creation and manipulation */
+/*--------------- lexer utilities ---------------------------*/
+int		is_operator(char c);
+int		skip_spaces(char *input, int i);
+
+/*------------------- lexer operations ----------------------*/
+
+t_token	*create_operator_token(char *input, int *i, int *pos);
+t_token	*create_word_token(char *input, int *i, int *pos);
+t_token	*lexer(char *input);
+
+/* -------------Token creation and manipulation--------------*/
 t_token	*token_new(t_token_type type, char *value, int pos);
 void	token_free(t_token *token);
 void	token_list_free(t_token *tokens);
-void	token_list_add_back(t_token **list, t_token *new);
+void	token_add_back(t_token **list, t_token *new);
 
 #endif

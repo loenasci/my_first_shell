@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 18:55:45 by lsarraci         ###   ########.fr       */
+/*   Updated: 2025/12/17 19:17:28 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(void)
 {
 	char	*input;
+	t_token	*tokens;
 	int		status;
 
 	display_banner();
@@ -27,7 +28,16 @@ int	main(void)
 		if (input[0])
 		{
 			add_history(input);
+			tokens = lexer(input);
+			if (!tokens)
+			{
+				ft_printf("Error: lexer failed");
+				free(input);
+				continue ;
+			}
+			print_tokens(tokens);
 			status = parser(input);
+			token_list_free(tokens);
 			if (status >= 0)
 			{
 				free(input);

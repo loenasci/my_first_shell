@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:30:00 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/17 16:19:00 by lsarraci         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:06:26 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_token	*token_new(t_token_type type, char *value, int pos)
 		return (NULL);
 	}
 	token->pos = pos;
+	token->length = ft_strlen(value);
+	token->quote_type = 0;
 	token->next = NULL;
 	return (token);
 }
@@ -52,7 +54,7 @@ void	token_list_free(t_token *tokens)
 	}
 }
 
-void	token_list_add_back(t_token **list, t_token *new)
+void	token_add_back(t_token **list, t_token *new)
 {
 	t_token	*current;
 

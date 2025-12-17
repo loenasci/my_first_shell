@@ -8,20 +8,25 @@ BLT_DIR = builtins/
 SRC += $(BLT_DIR)exit.c
 
 LEXER_DIR = lexer/
-SRC += $(LEXER_DIR)token_utils.c \
-	   $(LEXER_DIR)lexer.c
+SRC +=  $(LEXER_DIR)token_utils.c \
+		$(LEXER_DIR)lexer_words.c \
+		$(LEXER_DIR)lexer_commands.c \
+		$(LEXER_DIR)lexer_utils.c \
+	    $(LEXER_DIR)lexer.c
 
 PARSER_UTILS_DIR = parser/
 SRC += $(PARSER_UTILS_DIR)command_utils.c
 
-SIGNAL_UTLIS_DIR = signals/
-SRC += $(SIGNAL_UTLIS_DIR)signals.c \
-	   $(SIGNAL_UTLIS_DIR)signals_setup.c \
+SIGNAL_UTILS_DIR = signals/
+SRC += $(SIGNAL_UTILS_DIR)signals.c \
+	   $(SIGNAL_UTILS_DIR)signals_setup.c \
 
 DISPLAY_DIR = display/
 SRC += $(DISPLAY_DIR)banner.c \
 	   $(DISPLAY_DIR)prompt.c
 
+DEBUG_DIR = debug/
+SRC += $(DEBUG_DIR)lexer_debug.c \
 ## UTILS_DIR = utils/ 
 ## SRC += $(UTILS_DIR)string_utils.c \
 	   $(UTILS_DIR)array_utils.c \

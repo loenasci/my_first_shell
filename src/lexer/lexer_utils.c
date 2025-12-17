@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   types.h                                            :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/16 15:07:38 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/17 16:57:58 by lsarraci         ###   ########.fr       */
+/*   Created: 2025/12/17 17:30:57 by lsarraci          #+#    #+#             */
+/*   Updated: 2025/12/17 19:15:43 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPES_H
-# define TYPES_H
+#include "../../include/shell.h"
 
-typedef enum e_token_type
+int	is_operator(char c)
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_APPEND,
-	TOKEN_HEREDOC,
-	TOKEN_SINGLE_QUOTE,
-	TOKEN_DOUBLE_QUOTE,
-	TOKEN_VARIABLE,
-	TOKEN_AND,
-	TOKEN_OR
-}	t_token_type;
+	return (c == '|' || c == '<' || c == '>' || c == '&');
+}
 
-#endif
+int	skip_spaces(char *input, int i)
+{
+	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+		i++;
+	return (i);
+}
+/*char	*extract_quoted_word(char *input, int *i)
+{
+	
+}
+
+char	*extract_variable(char *input, int *i)
+{
+	
+}*/

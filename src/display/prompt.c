@@ -14,13 +14,14 @@
 
 /*
 ** Retorna um prompt sem usar defines - construção manual
-** Formato: [my_shell] > em verde
+** Formato: [my_shell] ➜ em verde
 ** \001 = início de sequência invisível
 ** \002 = fim de sequência invisível
 ** \033[32m = verde
 ** \033[0m = reset
+** ➜ = U+279C (UTF-8: \xe2\x9e\x9c)
 */
 char	*get_colored_prompt(void)
 {
-	return ("\001\033[32m\002[my_shell]\001\033[0m\002 > ");
+	return ("\001\033[32m\002[my_shell]\001\033[0m\002 ➜ ");
 }

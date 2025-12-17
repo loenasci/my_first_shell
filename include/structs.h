@@ -23,7 +23,9 @@ struct s_token
 	t_token_type	type;
 	char			*value;
 	int				pos;
-	struct s_token	*next;	
+	int				length;
+	char			quote_type;
+	struct s_token	*next;
 }	;
 
 struct s_command
