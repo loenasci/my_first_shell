@@ -12,26 +12,23 @@
 
 #include "../include/shell.h"
 
-static void	process_input_debug(char *input)
+static void	process_input(char *input, t_env *env)
 {
 	t_token		*tokens;
 	t_ast_node	*tree;
+	int			status;
 
 	tokens = lexer(input);
 	if (!tokens)
-	{
-		ft_printf("[DEBUG] Lexer failed\n");
 		return ;
-	}
-	print_tokens(tokens);
 	tree = parse_tokens(tokens);
 	if (!tree)
 	{
-		ft_printf("[DEBUG] Parser failed\n");
 		token_list_free(tokens);
 		return ;
 	}
-	print_ast(tree);
+	status = execute_ast(tree, env);
+	env->last_exit_status = status;
 	node_free(tree);
 	token_list_free(tokens);
 }
@@ -39,7 +36,10 @@ static void	process_input_debug(char *input)
 int	main(void)
 {
 	char	*input;
+	t_env	env;
 
+	env.vars = NULL;
+	env.last_exit_status = 0;
 	display_banner();
 	setup_signals_interactive();
 	while (1)
@@ -50,9 +50,10 @@ int	main(void)
 		if (input[0])
 		{
 			add_history(input);
-			process_input_debug(input);
+			process_input(input, &env);
 		}
 		free(input);
 	}
-	return (0);
+	free_env_list(env.vars);
+	return (env.last_exit_status);
 }

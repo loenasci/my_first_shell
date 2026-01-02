@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:10:09 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/22 17:36:44 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/02 16:01:25 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_command	t_command;
 typedef struct s_word_part	t_word_part;
 typedef struct s_redirect	t_redirect;
 typedef struct s_ast_node	t_ast_node;
-typedef struct s_env		t_env_var;
+typedef struct s_env_var	t_env_var;
 typedef struct s_env		t_env;
 
 struct s_token
