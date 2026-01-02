@@ -2,10 +2,30 @@
 
 ## Project Status Overview
 
-**Last Updated:** December 22, 2025  
-**Current Phase:** Parser Implementation (85% Complete)  
+**Last Updated:** January 2, 2026  
+**Overall Progress:** 🎯 **65%** Complete  
+**Current Phase:** Builtins Implementation  
 **Test Coverage:** 31/31 lexer tests + parser manual testing  
 **Code Quality:** Norminette compliant
+
+**Progress Summary:**
+- ✅ Infrastructure: 100%
+- ✅ Lexer: 100%
+- 🔄 Parser: 85%
+- ✅ Environment: 100%
+- ⏳ Executor: 5%
+- 🔄 Builtins: 30%
+
+**Recent Progress (Jan 2, 2026):**
+- ✅ Implemented complete environment management system
+- ✅ Created env module (init, utils, conversion, node management)
+- ✅ Integrated environment with main loop using envp
+- ✅ Added SHLVL auto-increment
+- ✅ Implemented env_to_array() for execve compatibility
+- ✅ Reorganized builtins structure (individual files)
+- ✅ Implemented builtin_pwd (working)
+- ✅ Implemented builtin_exit (working)
+- ✅ Shell compiles and runs successfully
 
 ---
 
@@ -170,7 +190,41 @@
 
 ---
 
-## ⏳ Phase 4: Executor (PENDING - 0%)
+## ✅ Phase 4: Environment Management (COMPLETED - 100%)
+
+### Environment Initialization
+- [x] Define t_env and t_env_var structures
+- [x] Implement init_env() to copy system environment
+- [x] Parse "KEY=VALUE" strings from envp
+- [x] Build linked list of environment variables
+- [x] Implement SHLVL auto-increment
+- [x] Integrate with main() using envp parameter
+
+### Environment Manipulation
+- [x] Implement env_get() to find variables
+- [x] Implement env_set() to add/update variables
+- [x] Implement env_unset() to remove variables
+- [x] Implement get_env_value() helper
+- [x] Create/free environment nodes
+- [x] Free complete environment structure
+
+### Environment Conversion
+- [x] Implement env_to_array() for execve compatibility
+- [x] Count environment variables
+- [x] Convert linked list to char** array
+- [x] Ensure NULL termination
+- [x] Implement free_env_array() for cleanup
+
+### Environment Files Structure
+- [x] env_init.c - Initialization functions (init_env, parse_env_string, increment_shlvl)
+- [x] env_utils.c - Get/set/unset operations
+- [x] env_node_utils.c - Node management and cleanup
+- [x] env_conversion.c - Array conversion (env_to_array, free_env_array)
+- [x] env.h - Function declarations
+
+---
+
+## ⏳ Phase 5: Executor (PENDING - 5%)
 
 ### Basic Execution
 - [ ] Implement command execution from AST
@@ -222,21 +276,66 @@
 
 ---
 
-## ⏳ Phase 5: Builtins (PARTIAL - 1/7)
+## 🔄 Phase 6: Builtins (IN PROGRESS - 30%)
 
-### Required Builtins
-- [x] exit - Exit shell with optional code
-- [ ] cd - Change directory (with -, ~, absolute, relative)
-- [ ] pwd - Print working directory
-- [ ] echo - Print arguments (with -n flag)
-- [ ] env - Print environment variables
-- [ ] export - Set environment variables
-- [ ] unset - Unset environment variables
+### Code Organization (Completed)
+- [x] Reorganize builtins into individual files
+- [x] Create src/builtins/ directory structure
+- [x] Move implementations from execution/ to builtins/
+- [x] Update all function signatures to (char **args, t_env *env)
+- [x] Create dispatcher functions in execute_builtin*.c
+- [x] Update builtins.h with proper declarations
+- [x] Update Makefile with BUILTINS_DIR section
 
-### Environment Management
-- [ ] Store environment in shell structure
-- [ ] Modify environment (export/unset)
-- [ ] Pass environment to execve
+### Builtin Files Structure
+- [x] src/builtins/cd.c - Change directory (stub)
+- [x] src/builtins/echo.c - Print arguments (stub)
+- [x] src/builtins/env.c - Print environment (stub)
+- [x] src/builtins/exit.c - Exit shell ✅ WORKING
+- [x] src/builtins/export.c - Set variables (stub)
+- [x] src/builtins/pwd.c - Print directory ✅ WORKING
+- [x] src/builtins/unset.c - Unset variables (stub)
+
+### Required Builtins Implementation
+- [x] exit - Exit shell with optional code ✅ COMPLETE
+  - [x] Validate numeric arguments
+  - [x] Handle too many arguments error
+  - [x] Use last_exit_status if no args
+  - [x] Modulo 256 exit codes
+- [x] pwd - Print working directory ✅ COMPLETE
+  - [x] Use getcwd()
+  - [x] Handle errors with perror
+- [ ] cd - Change directory (stub)
+  - [ ] Support absolute paths
+  - [ ] Support relative paths
+  - [ ] Support ~ (home directory)
+  - [ ] Support - (previous directory)
+  - [ ] Update PWD and OLDPWD
+- [ ] echo - Print arguments (stub)
+  - [ ] Print arguments separated by space
+  - [ ] Support -n flag (no newline)
+  - [ ] Handle multiple -n flags
+- [ ] env - Print environment variables (stub)
+  - [ ] Use env_to_array() to get variables
+  - [ ] Print each variable on new line
+  - [ ] No arguments support
+- [ ] export - Set environment variables (stub)
+  - [ ] Parse VAR=VALUE format
+  - [ ] Validate variable names
+  - [ ] Use env_set() to update
+  - [ ] Print all variables if no args
+- [ ] unset - Unset environment variables (stub)
+  - [ ] Use env_unset() to remove
+  - [ ] Support multiple arguments
+  - [ ] Validate variable names
+
+### Environment Integration
+- [x] Store environment in shell structure (t_env)
+- [x] Basic environment modification (env_set/env_unset implemented)
+- [ ] Complete export builtin implementation
+- [ ] Complete unset builtin implementation
+- [ ] Complete env builtin implementation
+- [x] Pass environment to execve (env_to_array ready)
 - [ ] Handle PATH updates
 
 ---

@@ -6,11 +6,15 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:48:12 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 17:31:49 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/02 18:00:00 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	builtin_cd(void)
+#include "../../include/shell.h"
+
+int	builtin_cd(char **args, t_env *env)
 {
+	(void)args;
+	(void)env;
 	return (0);
 }

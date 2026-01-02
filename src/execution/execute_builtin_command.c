@@ -6,39 +6,11 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 15:28:45 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/02 17:42:54 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/02 18:38:59 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
-
-static int	builtin_export(char **args, t_env *env)
-{
-	(void)args;
-	(void)env;
-	return (0);
-}
-
-static int	builtin_unset(char **args, t_env *env)
-{
-	(void)args;
-	(void)env;
-	return (0);
-}
-
-static int	builtin_env(char **args, t_env *env)
-{
-	(void)args;
-	(void)env;
-	return (0);
-}
-
-static int	builtin_echo(char **args, t_env *env)
-{
-	(void)args;
-	(void)env;
-	return (0);
-}
 
 int	execute_builtin_command(char **args, t_env *env)
 {
@@ -52,5 +24,9 @@ int	execute_builtin_command(char **args, t_env *env)
 		return (builtin_unset(args, env));
 	else if (ft_strcmp(args[0], "env") == 0)
 		return (builtin_env(args, env));
+	else if (ft_strcmp(args[0], "pwd") == 0)
+		return (builtin_pwd(args, env));
+	else if (ft_strcmp(args[0], "cd") == 0)
+		return (builtin_cd(args, env));
 	return (1);
 }

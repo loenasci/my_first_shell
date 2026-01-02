@@ -29,4 +29,8 @@ void		env_set(t_env *env, char *key, char *value);
 void		env_unset(t_env *env, char *key);
 char		*get_env_value(t_env *env, char *key);
 
+/*--------- environment conversion -----------------*/
+char		**env_to_array(t_env *env);
+void		free_env_array(char **envp);
+
 #endif

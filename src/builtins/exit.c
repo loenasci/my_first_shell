@@ -6,19 +6,31 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:51:29 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 17:33:15 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/02 18:00:00 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-int	builtin_exit(char **args)
+int	builtin_exit(char **args, t_env *env)
 {
-	int	code;
+	int	exit_code;
+	int	arg_count;
 
 	ft_printf("exit\n");
-	code = 0;
-	if (args && args[1])
-		code = ft_atoi(args[1]);
-	return (code);
+	arg_count = count_args(args);
+	if (arg_count == 1)
+		exit(env->last_exit_status);
+	if (!is_numeric(args[1]))
+	{
+		ft_printf("minishell: exit %s: numeric argument required\n", args[1]);
+		exit(255);
+	}
+	if (arg_count > 2)
+	{
+		ft_printf("minishell: exit: too many arguments");
+		return (1);
+	}
+	exit_code = ft_atoi(args[1]);
+	exit(exit_code % 256);
 }

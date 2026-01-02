@@ -13,6 +13,15 @@ SRC += $(EXEC_DIR)execution_main.c \
        $(EXEC_DIR)execute_logical.c \
        $(EXEC_DIR)execute_utils.c
 
+BUILTINS_DIR = builtins/
+SRC += $(BUILTINS_DIR)cd.c \
+       $(BUILTINS_DIR)echo.c \
+       $(BUILTINS_DIR)env.c \
+       $(BUILTINS_DIR)exit.c \
+       $(BUILTINS_DIR)export.c \
+       $(BUILTINS_DIR)pwd.c \
+       $(BUILTINS_DIR)unset.c
+
 LEXER_DIR = lexer/
 SRC +=  $(LEXER_DIR)token_utils.c \
 		$(LEXER_DIR)variable_utils.c \
@@ -65,29 +74,6 @@ SRC += $(ENV_DIR)env_conversion.c \
 	   $(ENV_DIR)env_node_utils.c \
 	   $(ENV_DIR)env_utils.c
 
-## OLD UTILS (commented for now)
-## SRC += $(UTILS_DIR)string_utils.c \
-	   $(UTILS_DIR)array_utils.c \
-	   $(UTILS_DIR)file_utils.c \
-	   $(UTILS_DIR)memory_utils.c \
-	   $(UTILS_DIR)linked_list_utils.c \
-	   $(UTILS_DIR)input_utils.c \
-	   $(UTILS_DIR)signal_utils.c \
-	   $(UTILS_DIR)command_utils.c \
-	   $(UTILS_DIR)execution_utils.c
-## PARSER_DIR = parser/
-## SRC += $(PARSER_DIR)lexer.c \
-	   $(PARSER_DIR)tokenizer.c \
-	   $(PARSER_DIR)syntax_analyzer.c \
-	   $(PARSER_DIR)heredoc.c \
-	   $(PARSER_DIR)expander.c \
-	   $(PARSER_DIR)parser_utils.c
-## EXECUTION_DIR = execution/
-## SRC += $(EXECUTION_DIR)executor.c \
-	   $(EXECUTION_DIR)redirection.c \
-	   $(EXECUTION_DIR)pipeline.c \
-	   $(EXECUTION_DIR)command_execution.c \
-	   $(EXECUTION_DIR)execution_utils.c
 SRC:=$(addprefix src/, $(SRC))
 OBJ = $(SRC:.c=.o)
 OBJ_DIR = obj
