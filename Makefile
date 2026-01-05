@@ -51,10 +51,9 @@ SRC +=	$(PARSER_UTILS_DIR)command_utils.c \
 		$(PARSER_UTILS_DIR)parser_utils.c \
 		$(PARSER_UTILS_DIR)parser_command.c \
 		$(PARSER_UTILS_DIR)parser_errors.c \
-		$(PARSER_UTILS_DIR)parser_error.c \
+		$(PARSER_UTILS_DIR)parser_error_msg.c \
 		$(PARSER_UTILS_DIR)parser_error_utils.c \
 		$(PARSER_UTILS_DIR)parser_build.c \
-		$(PARSER_UTILS_DIR)parser_operator.c \
 		$(PARSER_UTILS_DIR)parser_empty.c \
 		$(PARSER_UTILS_DIR)syntax_checks.c \
 		$(PARSER_UTILS_DIR)syntax_utils.c \
