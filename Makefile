@@ -31,6 +31,7 @@ SRC +=  $(LEXER_DIR)token_utils.c \
 		$(LEXER_DIR)lexer_logical.c \
 		$(LEXER_DIR)lexer_arrows.c \
 		$(LEXER_DIR)lexer_quotes.c \
+		$(LEXER_DIR)lexer_quotes_utils.c \
 		$(LEXER_DIR)lexer_variables.c \
 		$(LEXER_DIR)lexer_utils.c \
 	    $(LEXER_DIR)lexer.c
@@ -39,16 +40,22 @@ PARSER_UTILS_DIR = parser/
 SRC +=	$(PARSER_UTILS_DIR)command_utils.c \
 		$(PARSER_UTILS_DIR)general_utils.c \
 		$(PARSER_UTILS_DIR)heredoc_utils.c \
+		$(PARSER_UTILS_DIR)heredoc_file_utils.c \
 		$(PARSER_UTILS_DIR)node_utils.c \
 		$(PARSER_UTILS_DIR)redirect_utils.c \
 		$(PARSER_UTILS_DIR)parser_expansion.c \
+		$(PARSER_UTILS_DIR)parser_token_utils.c \
 		$(PARSER_UTILS_DIR)parser_heredoc.c \
 		$(PARSER_UTILS_DIR)parser_special.c \
 		$(PARSER_UTILS_DIR)parser_syntax.c \
 		$(PARSER_UTILS_DIR)parser_utils.c \
 		$(PARSER_UTILS_DIR)parser_command.c \
 		$(PARSER_UTILS_DIR)parser_errors.c \
+		$(PARSER_UTILS_DIR)parser_error.c \
+		$(PARSER_UTILS_DIR)parser_error_utils.c \
 		$(PARSER_UTILS_DIR)parser_build.c \
+		$(PARSER_UTILS_DIR)parser_operator.c \
+		$(PARSER_UTILS_DIR)parser_empty.c \
 		$(PARSER_UTILS_DIR)syntax_checks.c \
 		$(PARSER_UTILS_DIR)syntax_utils.c \
 

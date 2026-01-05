@@ -22,6 +22,7 @@ t_redirect	*redirect_new(t_token_type type, char *file, char *delimiter)
 	redir->type = type;
 	redir->file = file;
 	redir->delimiter = delimiter;
+	redir->heredoc_fd = -1;
 	redir->next = NULL;
 	return (redir);
 }
@@ -30,6 +31,7 @@ void	redirect_free(t_redirect *redir)
 {
 	if (!redir)
 		return ;
+	close_heredoc_fd(redir);
 	if (redir->file)
 		free(redir->file);
 	if (redir->delimiter)

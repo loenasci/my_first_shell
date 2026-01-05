@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:11:15 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/23 18:22:59 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 16:00:13 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "structs.h"
 
 /* Command creation and manipulation */
+int			is_valid_command(t_command *cmd);
 t_command	*command_new(void);
 void		command_free(t_command *cmd);
 void		command_list_free(t_command *cmds);
@@ -37,6 +38,13 @@ char		*expand_heredoc_line(char *line);
 /* heredoc processing */
 int			process_heredoc(char *delimiter);
 
+/* heredoc file utils */
+void		init_heredoc_fd(t_redirect *redir);
+int			setup_heredoc(t_redirect *redir);
+void		close_heredoc_fd(t_redirect *redir);
+void		cleanup_heredoc_fds(t_redirect *redir);
+int			process_all_heredocs(t_command *cmd);
+
 /* Syntax validation */
 int			validate_syntax(t_token *tokens);
 int			has_orphan_operator_start(t_token *tokens);
@@ -44,11 +52,26 @@ int			has_orphan_operator_end(t_token *tokens);
 int			has_consecutive_operators(t_token *tokens);
 int			has_redirect_without_target(t_token *tokens);
 int			has_redirect_before_operator(t_token *tokens);
+int			has_heredoc(t_command *cmd);
+
+/* Check empty */
+int			has_literal_quote(t_word_part *parts);
+int			should_keep_expanded_arg(char *arg, int is_from_literal);
+int			has_valid_redirect_target(t_token_type type, char *target);
 
 /* Error handling */
 void		syntax_error(char *msg, t_token *token);
 char		*get_token_type_name(t_token_type type);
 void		parse_cleanup(t_ast_node *partial_tree, t_token *remaining_tokens);
+void		parse_error_node(char *msg, t_ast_node *node);
+void		parse_error_command(char *msg, t_command *cmd);
+void		empty_command_error(t_command *cmd);
+void		*parser_null_error(char *msg);
+void		parse_error_free(char *msg, void *ptr, void (*free_func)(void *));
+int			redirect_error(char *msg, t_token_type type, char *file);
+int			ambiguous_redirect_error(char *target);
+int			heredoc_limiter_error(char *delimiter);
+int			parser_false_error(char *message);
 
 /* Syntax helper checks */
 int			is_invalid_start_token(t_token *token);
@@ -56,6 +79,12 @@ int			is_invalid_end_token(t_token *token);
 t_token		*get_last_token(t_token *tokens);
 int			redirect_has_valid_target(t_token *redirect);
 int			is_invalid_redirect_sequence(t_token *current);
+int			has_orphan_operator_start(t_token *tokens);
+int			has_orphan_operator_end(t_token *tokens);
+int			has_consecutive_operators(t_token *tokens);
+int			has_redirect_without_target(t_token *tokens);
+int			has_redirect_before_operator(t_token *tokens);
+void		syntax_error(char *message, t_token *token);
 
 /* AST node creation and manipulation */
 t_ast_node	*node_new(void);

@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:59:31 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/22 19:11:53 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:28:12 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ t_ast_node	*parse_pipeline(t_token **tokens)
 		*tokens = (*tokens)->next;
 		right = parse_simple_cmd(tokens);
 		if (!right)
-		{
-			node_free(left);
-			return (NULL);
-		}
+			return (parse_error_node("parse error in pipeline", left), NULL);
 		left = node_new_operator(NODE_PIPE, left, right);
 	}
 	return (left);
@@ -53,10 +50,8 @@ t_ast_node	*parse_logical(t_token **tokens)
 		*tokens = (*tokens)->next;
 		right = parse_pipeline(tokens);
 		if (!right)
-		{
-			node_free(left);
-			return (NULL);
-		}
+			return (parse_error_node("parse error in logical operator",
+					left), NULL);
 		left = node_new_operator(op_type, left, right);
 	}
 	return (left);

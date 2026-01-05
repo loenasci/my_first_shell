@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:04:24 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/19 18:29:28 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:49:03 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int			skip_spaces(char *input, int i);
 int			is_word_char(char c);
 int			is_word_boundary(char c);
 int			is_not_special(char c);
+int			validate_quotes(char *input);
 
 /*--------------- variable utilities ------------------------*/
 
@@ -41,7 +42,7 @@ t_token		*create_arrow_token(char *input, int *i, int *pos);
 t_token		*create_word_token(char *input, int *i, int *pos);
 t_word_part	*extract_single_quoted(char *input, int *i);
 t_word_part	*extract_double_quoted(char *input, int *i);
-t_token		*lexer(char *input);
+t_token		*lexer(char *input, int i);
 
 /* -------------Word part creation and manipulation----------*/
 t_token		*token_new_word(t_word_part *parts, int pos);

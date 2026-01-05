@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 16:18:45 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/19 14:54:48 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:48:39 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static t_token	*handle_operator(char *input, int *i, int *pos)
 	return (NULL);
 }
 
-t_token	*lexer(char *input)
+t_token	*lexer(char *input, int i)
 {
-	int		i;
 	int		pos;
 	t_token	*tokens;
 	t_token	*new;
 
-	i = 0;
+	if (!validate_quotes(input))
+		return (NULL);
 	tokens = NULL;
 	pos = 0;
 	while (input[i])

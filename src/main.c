@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/23 19:03:26 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:49:24 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,22 @@ static void	process_input(char *input, t_env *env)
 	t_token		*tokens;
 	t_ast_node	*tree;
 	int			status;
+	char		*debug_mode;
 
-	tokens = lexer(input);
+	debug_mode = getenv("DEBUG");
+	tokens = lexer(input, 0);
 	if (!tokens)
 		return ;
+	if (debug_mode && ft_strcmp(debug_mode, "1") == 0)
+		print_tokens(tokens);
 	tree = parse_tokens(tokens);
 	if (!tree)
 	{
 		token_list_free(tokens);
 		return ;
 	}
+	if (debug_mode && ft_strcmp(debug_mode, "1") == 0)
+		print_ast(tree);
 	status = execute_ast(tree, env);
 	env->last_exit_status = status;
 	node_free(tree);

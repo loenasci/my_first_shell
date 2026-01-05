@@ -6,11 +6,22 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:30:00 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/22 19:11:43 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 14:53:32 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
+
+int	is_valid_command(t_command *cmd)
+{
+	if (!cmd)
+		return (0);
+	if (cmd->args || cmd->args[0])
+		return (1);
+	if (cmd->redirects)
+		return (1);
+	return (0);
+}
 
 t_command	*command_new(void)
 {

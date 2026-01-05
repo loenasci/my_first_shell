@@ -64,7 +64,7 @@ void	print_redirects(t_command *cmd)
 		else if (redir->type == TOKEN_APPEND)
 			ft_printf(" >> %s", redir->file);
 		else if (redir->type == TOKEN_HEREDOC)
-			ft_printf(" << %s", redir->delimiter);
+			ft_printf(" << %s [fd:%d]", redir->delimiter, redir->heredoc_fd);
 		redir = redir->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:10:09 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/02 16:01:25 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:33:02 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ struct s_redirect
 	t_token_type		type;
 	char				*file;
 	char				*delimiter;
+	int					heredoc_fd;
 	struct s_redirect	*next;
 }	;
 

@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:23:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/02 17:52:32 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:31:49 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define F_WHITE "\033[37m"
 
 # define PATH_MAX	4096
+# define MAX_COMMAND_LENGTH 131072
 
 /* Exit status management */
 void	set_exit_status(int status);
