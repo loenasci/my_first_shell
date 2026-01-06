@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 16:45:34 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:15:51 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,27 @@ static void	process_input(char *input, t_env *env)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_env	*env;
+	char				*input;
+	t_env				*env;
+	t_display_config	*display;
 
 	(void)argc;
 	(void)argv;
+	display = init_display();
+	if (!display)
+		return (1);
 	env = init_env(envp);
 	if (!env)
+	{
+		free_display_config(display);
 		return (1);
+	}
+	env->display = display;
 	display_banner();
 	setup_signals_interactive();
 	while (1)
 	{
-		input = readline(get_colored_prompt());
+		input = readline(build_prompt(display));
 		if (!input)
 			break ;
 		if (input[0])
@@ -64,5 +72,6 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 	}
 	free_env(env);
+	free_display_config(display);
 	return (0);
 }

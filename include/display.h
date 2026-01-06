@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:36 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 18:21:09 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:12:10 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@
 ** \001 (RL_PROMPT_START_IGNORE) e \002 (RL_PROMPT_END_IGNORE)
 ** CADA sequência de escape deve estar completamente envolvida
 */
-# define RL_COLOR_RESET		"\001\033[0m\002"
-# define RL_COLOR_BOLD		"\001\033[1m\002"
-# define RL_COLOR_GREEN		"\001\033[32m\002"
-# define RL_COLOR_BLUE		"\001\033[34m\002"
-# define RL_COLOR_CYAN		"\001\033[36m\002"
+# define RL_COLOR_RESET			"\001\033[0m\002"
+# define RL_COLOR_BOLD			"\001\033[1m\002"
+# define RL_COLOR_GREEN			"\001\033[32m\002"
+# define RL_COLOR_BLUE			"\001\033[34m\002"
+# define RL_COLOR_CYAN			"\001\033[36m\002"
+# define RL_COLOR_BOLD_GREEN	"\001\033[1;32m\002"
+# define RL_COLOR_BOLD_BLUE		"\001\033[1;34m\002"
 
 /*
 ** Macros auxiliares para facilitar uso no prompt
@@ -58,13 +60,20 @@ int					is_tty_output(void);
 int					is_tty_input(void);
 int					supports_utf8(void);
 t_verbose			get_verbose_mode(t_display_config *config);
+t_color_mode		parse_color_mode(void);
+int					should_enable_colors(t_color_mode mode,
+						t_terminal_type term_type);
 
 /* display configuration functions */
 t_terminal_type		detect_terminal_type(void);
 t_display_config	*init_display(void);
+void				free_display_config(t_display_config *config);
+int					should_print_message(t_display_config *config,
+						t_verbose min_level);
+int					check_if_color(t_display_config *config);
 
 /* General display functions */
 void				display_banner(void);
-char				*get_colored_prompt(void);
+char				*build_prompt(t_display_config *config);
 
 #endif

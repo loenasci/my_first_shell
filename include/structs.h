@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:10:09 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 17:22:04 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:11:30 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,21 @@ struct s_env_var
 
 struct s_env
 {
-	t_env_var	*vars;
-	int			last_exit_status;
+	t_env_var			*vars;
+	int					last_exit_status;
+	t_display_config	*display_config;
 }	;
 
 struct s_display_config
 {
-	int				is_enabled;
-	int				is_color_active;
-	t_verbose		verbose;
-	t_color_mode	color_mode;
-	t_terminal_type	terminal_type;
-	t_prompt_type	prompt_type;
-	t_prompt_style	prompt_style;
-	t_output_format	output_format;
+	int					is_enabled;
+	int					is_color_active;
+	t_verbose			verbose;
+	t_color_mode		color_mode;
+	t_terminal_type		terminal_type;
+	t_prompt_type		prompt_type;
+	t_prompt_style		prompt_style;
+	t_output_format		output_format;
 }	;
 
 #endif

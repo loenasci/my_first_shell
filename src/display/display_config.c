@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 16:01:58 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 18:26:11 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 18:44:52 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,27 @@
 t_display_config	*init_display(void)
 {
 	t_display_config	*config;
-	char				*term;
-	char				*no_color;
-	char				*verbose;
+	int					utf8_support;
 
 	config = malloc(sizeof(t_display_config));
 	if (!config)
 		return (NULL);
-	term = getenv("TERM");
-	no_color = getenv("NO_COLOR");
-	verbose = getenv("VERBOSE");
 	config->terminal_type = detect_terminal_type();
-	config->verbose = get_verbose_mode(config);
-	config->color_mode = COLOR_MODE_AUTO;
-	if (no_color && no_color[0])
-		config->color_mode = COLOR_MODE_NEVER;
-	else if (config->terminal_type != TERMINAL_TYPE_DUMB
-		&& is_tty_output())
-		config->color_mode = COLOR_MODE_ALWAYS;
+	config->color_mode = parse_color_mode();
+	config->is_color_active = should_enable_colors(
+			config->color_mode, config->terminal_type);
+	utf8_support = supports_utf8();
+	config->prompt_style = parse_prompt_style(
+			utf8_support, config->is_color_active);
+	config->output_format = parse_output_format(config->is_color_active);
+	config->prompt_type = PROMPT_PRIMARY;
+	config->verbose = parse_verbose_level();
+	config->is_enabled = 1;
 	return (config);
+}
+
+void	free_display_config(t_display_config *config)
+{
+	if (config)
+		free(config);
 }

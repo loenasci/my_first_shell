@@ -6,22 +6,44 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 18:58:14 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:09:01 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-/*
-** Retorna um prompt sem usar defines - construção manual
-** Formato: [my_shell] ➜ em verde
-** \001 = início de sequência invisível
-** \002 = fim de sequência invisível
-** \033[32m = verde
-** \033[0m = reset
-** ➜ = U+279C (UTF-8: \xe2\x9e\x9c)
-*/
-char	*get_colored_prompt(void)
+static char	*build_minimal_prompt(t_display_config *config)
 {
-	return ("\001\033[32m\002[my_shell]\001\033[0m\002 ➜ ");
+	if (config->is_color_active)
+		return (RL_COLOR_GREEN "my_shell" RL_COLOR_RESET " $ ");
+	return ("$ ");
+}
+
+static char	*build_default_prompt(t_display_config *config)
+{
+	if (config->is_color_active)
+		return (RL_COLOR_BLUE "my_shell" RL_COLOR_RESET ":" \
+			RL_COLOR_CYAN "~" RL_COLOR_RESET "> ");
+	return ("[my_shell]> ");
+}
+
+static char	*build_fancy_prompt(t_display_config *config)
+{
+	if (config->is_color_active)
+		return (RL_COLOR_BOLD_GREEN "my_shell" RL_COLOR_RESET ":" \
+			RL_COLOR_BOLD_BLUE "~" RL_COLOR_RESET " ➜ ");
+	return ("my_shell:~ ➜ ");
+}
+
+char	*build_prompt(t_display_config *config)
+{
+	t_prompt_style	style;
+
+	style = parse_prompt_style();
+	if (style == PROMPT_STYLE_MINIMAL)
+		return (build_minimal_prompt(config));
+	else if (style == PROMPT_STYLE_FANCY)
+		return (build_fancy_prompt(config));
+	else
+		return (build_default_prompt(config));
 }
