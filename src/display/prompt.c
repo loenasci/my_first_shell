@@ -6,44 +6,71 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 19:09:01 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:39:33 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-static char	*build_minimal_prompt(t_display_config *config)
+static int	should_use_colors(void)
 {
-	if (config->is_color_active)
-		return (RL_COLOR_GREEN "my_shell" RL_COLOR_RESET " $ ");
-	return ("$ ");
+	char	*no_color;
+
+	if (!isatty(STDOUT_FILENO))
+		return (0);
+	no_color = getenv("NO_COLOR");
+	if (no_color && no_color[0])
+		return (0);
+	return (1);
 }
 
-static char	*build_default_prompt(t_display_config *config)
+static int	supports_utf8(void)
 {
-	if (config->is_color_active)
+	char	*locale;
+
+	locale = getenv("LANG");
+	if (!locale)
+		locale = getenv("LC_ALL");
+	if (!locale)
+		locale = getenv("LC_CTYPE");
+	if (locale && (ft_strstr(locale, "UTF-8") || ft_strstr(locale, "utf8")))
+		return (1);
+	return (0);
+}
+
+static char	*get_prompt_style(int use_colors, int use_utf8)
+{
+	char	*style;
+
+	style = getenv("MYSH_PROMPT_STYLE");
+	if (style)
+	{
+		if (ft_strcmp(style, "minimal") == 0)
+		{
+			if (use_colors)
+				return (RL_COLOR_GREEN "my_shell" RL_COLOR_RESET " $ ");
+			return ("$ ");
+		}
+		if (ft_strcmp(style, "fancy") == 0 && use_utf8)
+		{
+			if (use_colors)
+				return (RL_COLOR_BOLD_GREEN "my_shell" RL_COLOR_RESET ":" \
+					RL_COLOR_BOLD_BLUE "~" RL_COLOR_RESET " ➜ ");
+			return ("my_shell:~ ➜ ");
+		}
+	}
+	if (use_colors)
 		return (RL_COLOR_BLUE "my_shell" RL_COLOR_RESET ":" \
 			RL_COLOR_CYAN "~" RL_COLOR_RESET "> ");
 	return ("[my_shell]> ");
 }
 
-static char	*build_fancy_prompt(t_display_config *config)
+char	*build_prompt(void)
 {
-	if (config->is_color_active)
-		return (RL_COLOR_BOLD_GREEN "my_shell" RL_COLOR_RESET ":" \
-			RL_COLOR_BOLD_BLUE "~" RL_COLOR_RESET " ➜ ");
-	return ("my_shell:~ ➜ ");
-}
+	int	use_colors;
+	int	use_utf8;
 
-char	*build_prompt(t_display_config *config)
-{
-	t_prompt_style	style;
-
-	style = parse_prompt_style();
-	if (style == PROMPT_STYLE_MINIMAL)
-		return (build_minimal_prompt(config));
-	else if (style == PROMPT_STYLE_FANCY)
-		return (build_fancy_prompt(config));
-	else
-		return (build_default_prompt(config));
+	use_colors = should_use_colors();
+	use_utf8 = supports_utf8();
+	return (get_prompt_style(use_colors, use_utf8));
 }

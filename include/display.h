@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:36 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 19:12:10 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:40:00 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@
 # define COLOR_CYAN		"\033[36m"
 # define COLOR_WHITE	"\033[37m"
 
-/*
-** Códigos de cores para prompts readline
-** \001 (RL_PROMPT_START_IGNORE) e \002 (RL_PROMPT_END_IGNORE)
-** CADA sequência de escape deve estar completamente envolvida
-*/
 # define RL_COLOR_RESET			"\001\033[0m\002"
 # define RL_COLOR_BOLD			"\001\033[1m\002"
 # define RL_COLOR_GREEN			"\001\033[32m\002"
@@ -42,38 +37,8 @@
 # define RL_COLOR_BOLD_GREEN	"\001\033[1;32m\002"
 # define RL_COLOR_BOLD_BLUE		"\001\033[1;34m\002"
 
-/*
-** Macros auxiliares para facilitar uso no prompt
-*/
-
-# define COLOR_BG_BLACK		"\033[40m"
-# define COLOR_BG_RED		"\033[41m"
-# define COLOR_BG_GREEN		"\033[42m"
-# define COLOR_BG_YELLOW	"\033[43m"
-# define COLOR_BG_BLUE		"\033[44m"
-# define COLOR_BG_MAGENTA	"\033[45m"
-# define COLOR_BG_CYAN		"\033[46m"
-# define COLOR_BG_WHITE		"\033[47m"
-
-/* terminal utilities */
-int					is_tty_output(void);
-int					is_tty_input(void);
-int					supports_utf8(void);
-t_verbose			get_verbose_mode(t_display_config *config);
-t_color_mode		parse_color_mode(void);
-int					should_enable_colors(t_color_mode mode,
-						t_terminal_type term_type);
-
-/* display configuration functions */
-t_terminal_type		detect_terminal_type(void);
-t_display_config	*init_display(void);
-void				free_display_config(t_display_config *config);
-int					should_print_message(t_display_config *config,
-						t_verbose min_level);
-int					check_if_color(t_display_config *config);
-
-/* General display functions */
+/* Display functions */
 void				display_banner(void);
-char				*build_prompt(t_display_config *config);
+char				*build_prompt(void);
 
 #endif

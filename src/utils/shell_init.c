@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display_config_tty.c                               :+:      :+:    :+:   */
+/*   shell_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 17:11:48 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 18:15:25 by lsarraci         ###   ########.fr       */
+/*   Created: 2026/01/06 19:39:01 by lsarraci          #+#    #+#             */
+/*   Updated: 2026/01/06 19:40:05 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-t_terminal_type	detect_terminal_type(void)
-{
-	char	*term;
 
-	term = getenv("TERM");
-	if (!term || !term[0] || ft_strcmp(term, "dumb") == 0
-		|| ft_strcmp(term, "unknown") == 0)
-		return (TERMINAL_TYPE_DUMB);
-	return (TERMINAL_TYPE_OTHER);
+t_env	*init_shell(char **envp)
+{
+	t_env	*env;
+
+	env = init_env(envp);
+	if (!env)
+		return (NULL);
+	display_banner();
+	return (env);
+}
+
+void	cleanup_shell(t_env *env)
+{
+	if (!env)
+		return ;
+	free_env(env);
 }

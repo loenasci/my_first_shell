@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:23:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 16:34:52 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:39:45 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,9 @@
 /* Exit status management */
 void	set_exit_status(int status);
 int		get_exit_status(void);
+
+/* Shell initialization and cleanup */
+t_env	*init_shell(char **envp);
+void	cleanup_shell(t_env *env);
 
 #endif

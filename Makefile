@@ -73,6 +73,7 @@ SRC += $(DEBUG_DIR)lexer_debug.c \
 
 UTILS_DIR = utils/
 SRC += $(UTILS_DIR)exit_status.c \
+	   $(UTILS_DIR)shell_init.c
 
 ENV_DIR = env/
 SRC += $(ENV_DIR)env_conversion.c \
@@ -134,4 +135,15 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+valgrind: $(NAME)
+	@echo "Running valgrind tests..."
+	@./test_leaks.sh
+
+leak: $(NAME)
+	@echo "Quick leak check..."
+	@echo -e 'pwd\necho test\nexit' | valgrind --leak-check=full \
+		--show-leak-kinds=definite,possible \
+		--suppressions=./readline.supp \
+		./my_shell 2>&1 | grep -E "LEAK SUMMARY" -A 5
+
+.PHONY: all clean fclean re valgrind leak
