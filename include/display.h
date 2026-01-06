@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:36 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 18:57:40 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 16:14:47 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,23 @@
 # define COLOR_BG_MAGENTA	"\033[45m"
 # define COLOR_BG_CYAN		"\033[46m"
 # define COLOR_BG_WHITE		"\033[47m"
+
+typedef struct s_display_config	t_display_config;
+typedef enum e_verbose			t_verbose;
+
+enum	e_verbose
+{
+	VERBOSE,
+	NONVERBOSE,
+	OFF,
+}	;
+
+struct s_display_config
+{
+	int			is_enabled;
+	int			is_color_active;
+	t_verbose	verbose;
+}	;
 
 /*
 ** Funções de display
