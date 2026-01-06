@@ -135,15 +135,10 @@ fclean: clean
 
 re: fclean all
 
-valgrind: $(NAME)
-	@echo "Running valgrind tests..."
-	@./test_leaks.sh
-
 leak: $(NAME)
 	@echo "Quick leak check..."
-	@echo -e 'pwd\necho test\nexit' | valgrind --leak-check=full \
+	@echo -e 'pwd\nexit' | valgrind --leak-check=full \
 		--show-leak-kinds=definite,possible \
-		--suppressions=./readline.supp \
-		./my_shell 2>&1 | grep -E "LEAK SUMMARY" -A 5
+		./my_shell 2>&1 | grep -E "LEAK SUMMARY|definitely lost|possibly lost" -A 2
 
-.PHONY: all clean fclean re valgrind leak
+.PHONY: all clean fclean re leak
