@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:10:09 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 15:33:02 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 17:22:04 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 # include "types.h"
 
-typedef struct s_token		t_token;
-typedef struct s_command	t_command;
-typedef struct s_word_part	t_word_part;
-typedef struct s_redirect	t_redirect;
-typedef struct s_ast_node	t_ast_node;
-typedef struct s_env_var	t_env_var;
-typedef struct s_env		t_env;
+typedef struct s_token			t_token;
+typedef struct s_command		t_command;
+typedef struct s_word_part		t_word_part;
+typedef struct s_redirect		t_redirect;
+typedef struct s_ast_node		t_ast_node;
+typedef struct s_env_var		t_env_var;
+typedef struct s_env			t_env;
+typedef struct s_display_config	t_display_config;
 
 struct s_token
 {
@@ -74,6 +75,18 @@ struct s_env
 {
 	t_env_var	*vars;
 	int			last_exit_status;
+}	;
+
+struct s_display_config
+{
+	int				is_enabled;
+	int				is_color_active;
+	t_verbose		verbose;
+	t_color_mode	color_mode;
+	t_terminal_type	terminal_type;
+	t_prompt_type	prompt_type;
+	t_prompt_style	prompt_style;
+	t_output_format	output_format;
 }	;
 
 #endif

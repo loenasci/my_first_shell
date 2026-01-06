@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:36 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 16:14:47 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 18:21:09 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,18 @@
 # define COLOR_BG_CYAN		"\033[46m"
 # define COLOR_BG_WHITE		"\033[47m"
 
-typedef struct s_display_config	t_display_config;
-typedef enum e_verbose			t_verbose;
+/* terminal utilities */
+int					is_tty_output(void);
+int					is_tty_input(void);
+int					supports_utf8(void);
+t_verbose			get_verbose_mode(t_display_config *config);
 
-enum	e_verbose
-{
-	VERBOSE,
-	NONVERBOSE,
-	OFF,
-}	;
+/* display configuration functions */
+t_terminal_type		detect_terminal_type(void);
+t_display_config	*init_display(void);
 
-struct s_display_config
-{
-	int			is_enabled;
-	int			is_color_active;
-	t_verbose	verbose;
-}	;
-
-/*
-** Funções de display
-*/
-void	display_banner(void);
-char	*get_colored_prompt(void);
+/* General display functions */
+void				display_banner(void);
+char				*get_colored_prompt(void);
 
 #endif

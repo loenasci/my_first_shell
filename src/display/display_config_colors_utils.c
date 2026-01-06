@@ -1,18 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file.h                                             :+:      :+:    :+:   */
+/*   display_config_colors_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 16:16:30 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 17:24:54 by lsarraci         ###   ########.fr       */
+/*   Created: 2026/01/06 18:26:48 by lsarraci          #+#    #+#             */
+/*   Updated: 2026/01/06 18:27:09 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILE_H
-# define FILE_H
-
-void	init_file(void);
-
-#endif
+#include "../../include/shell.h"
