@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:52:17 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 16:37:08 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:04:42 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 
 # include "structs.h"
 
+/*--------- execution utilities --------------------------*/
 int			is_builtin(char *cmd);
 int			is_valid_identifier(char *str);
 int			count_args(char **args);
 int			is_numeric(char *str);
+void		set_exit(t_ast_node *node, t_env *env);
+void		free_exec_and_exit(char *exec);
 
 /*--------- execiton main functions ----------------------*/
 int			execute_ast(t_ast_node *node, t_env *env);

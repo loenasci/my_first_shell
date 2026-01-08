@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:56:26 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 17:39:52 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:04:57 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static void	execute_in_child(t_ast_node *node, t_env *env)
 	}
 	envp = env_to_array(env);
 	if (!envp)
-	{
-		free(executable);
-		exit(1);
-	}
+		free_exec_and_exit(executable);
 	execve(executable, node->cmd->args, envp);
 	ft_printf("%s: execution failed\n", node->cmd->args[0]);
 	free_env_array(envp);

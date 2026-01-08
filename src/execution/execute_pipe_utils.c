@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 17:26:48 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 17:31:51 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:05:03 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,10 @@ void	set_exit(t_ast_node *node, t_env *env)
 		exit(0);
 	if (is_builtin(node->cmd->args[0]))
 		exit(execute_builtin(node->cmd->args, env));
+}
+
+void	free_exec_and_exit(char *exec)
+{
+	free(exec);
+	exit(1);
 }
