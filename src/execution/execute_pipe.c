@@ -6,11 +6,36 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:56:26 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 16:36:15 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/08 17:39:52 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
+
+static void	execute_in_child(t_ast_node *node, t_env *env)
+{
+	char	*executable;
+	char	**envp;
+
+	set_exit(node, env);
+	executable = find_executable(node->cmd->args[0], env);
+	if (!executable)
+	{
+		ft_printf("%s: command not found\n", node->cmd->args[0]);
+		exit(127);
+	}
+	envp = env_to_array(env);
+	if (!envp)
+	{
+		free(executable);
+		exit(1);
+	}
+	execve(executable, node->cmd->args, envp);
+	ft_printf("%s: execution failed\n", node->cmd->args[0]);
+	free_env_array(envp);
+	free(executable);
+	exit(126);
+}
 
 static void	setup_left_child(int *pipe_fds, t_ast_node *node, t_env *env)
 {
@@ -18,7 +43,7 @@ static void	setup_left_child(int *pipe_fds, t_ast_node *node, t_env *env)
 	close(pipe_fds[0]);
 	dup2(pipe_fds[1], STDOUT_FILENO);
 	close(pipe_fds[1]);
-	exit(execute_ast(node, env));
+	execute_in_child(node, env);
 }
 
 static void	setup_right_child(int *pipe_fds, t_ast_node *node, t_env *env)
@@ -27,7 +52,7 @@ static void	setup_right_child(int *pipe_fds, t_ast_node *node, t_env *env)
 	close(pipe_fds[1]);
 	dup2(pipe_fds[0], STDIN_FILENO);
 	close(pipe_fds[0]);
-	exit(execute_ast(node, env));
+	execute_in_child(node, env);
 }
 
 static int	wait_both_children(pid_t pid_left, pid_t pid_right)
