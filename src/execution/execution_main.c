@@ -18,5 +18,7 @@ int	execute_ast(t_ast_node *node, t_env *env)
 		return (env->last_exit_status);
 	if (node->type == NODE_COMMAND)
 		return (execute_command(node->cmd, env));
+	if (node->type == NODE_PIPE)
+		return (execute_pipe(node, env));
 	return (1);
 }
