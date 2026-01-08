@@ -83,7 +83,10 @@ SRC += $(ENV_DIR)env_conversion.c \
 	   $(ENV_DIR)env_init.c \
 	   $(ENV_DIR)env_node_utils.c \
 	   $(ENV_DIR)env_utils.c
-
+FILE_DIR = file_manager/
+SRC += $(FILE_DIR)file_init.c \
+	   $(FILE_DIR)file_utils.c \
+	   
 SRC:=$(addprefix src/, $(SRC))
 OBJ = $(SRC:.c=.o)
 OBJ_DIR = obj
