@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:51:11 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/02 18:00:00 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/07 21:12:38 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,16 @@
 
 int	builtin_env(char **args, t_env *env)
 {
+	t_env_var	*current;
+
 	(void)args;
-	(void)env;
+	if (!env)
+		return (1);
+	current = env->vars;
+	while (current)
+	{
+		ft_printf("%s=%s\n", current->key, current->value);
+		current = current->next;
+	}
 	return (0);
 }
