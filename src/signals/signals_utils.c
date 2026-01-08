@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_init.c                                       :+:      :+:    :+:   */
+/*   signals_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 19:39:01 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 20:14:38 by lsarraci         ###   ########.fr       */
+/*   Created: 2026/01/08 13:56:05 by lsarraci          #+#    #+#             */
+/*   Updated: 2026/01/08 14:04:49 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-t_env	*init_shell(char **envp)
+t_signal_state	*get_signal_state(void)
 {
-	t_env	*env;
+	static t_signal_state	signal_state = {0, 0, 0};
 
-	env = init_env(envp);
-	if (!env)
-		return (NULL);
-	display_banner();
-	return (env);
+	return (&signal_state);
 }
 
-void	cleanup_shell(t_env *env)
+void	signal_clear(void)
 {
-	if (!env)
-		return ;
-	free_env(env);
-}
+	t_signal_state	*state;
 
-void	shell_cleanup_and_exit(t_env *env, int exit_code)
-{
-	rl_clear_history();
-	cleanup_shell(env);
-	exit(exit_code);
+	state = get_signal_state();
+	state->received = 0;
 }

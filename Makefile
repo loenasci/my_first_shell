@@ -60,7 +60,9 @@ SRC +=	$(PARSER_UTILS_DIR)command_utils.c \
 
 SIGNAL_UTILS_DIR = signals/
 SRC += $(SIGNAL_UTILS_DIR)signals.c \
-	   $(SIGNAL_UTILS_DIR)signals_setup.c
+	   $(SIGNAL_UTILS_DIR)signals_setup.c \
+	   $(SIGNAL_UTILS_DIR)signals_utils.c \
+	   $(SIGNAL_UTILS_DIR)signals_heredoc.c
 
 DISPLAY_DIR = display/
 SRC += $(DISPLAY_DIR)banner.c \
@@ -73,7 +75,8 @@ SRC += $(DEBUG_DIR)lexer_debug.c \
 
 UTILS_DIR = utils/
 SRC += $(UTILS_DIR)exit_status.c \
-	   $(UTILS_DIR)shell_init.c
+	   $(UTILS_DIR)shell_init.c \
+	   $(UTILS_DIR)shell_signals.c
 
 ENV_DIR = env/
 SRC += $(ENV_DIR)env_conversion.c \

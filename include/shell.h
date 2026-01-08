@@ -45,4 +45,12 @@ int		get_exit_status(void);
 t_env	*init_shell(char **envp);
 void	cleanup_shell(t_env *env);
 
+/* Shell signal utilities */
+int		check_signal_received(void);
+int		was_interrupted(void);
+void	handle_signal_after_readline(char **input);
+void	handle_signal_after_execution(void);
+int		should_exit_shell(char *input);
+void	shell_cleanup_and_exit(t_env *env, int exit_code);
+
 #endif
