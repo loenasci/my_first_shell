@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:23:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 15:31:49 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:39:45 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,7 @@
 # include "lexer.h"
 # include "debug.h"
 # include "env.h"
-
-# define F_BLACK "\033[30m"
-# define F_RED "\033[31m"
-# define F_GREEN "\033[32m"
-# define F_YELLOW "\033[33m"
-# define F_BLUE "\033[34m"
-# define F_MAGENTA "\033[35m"
-# define F_CYAN "\033[36m"
-# define F_WHITE "\033[37m"
+# include "file.h"
 
 # define PATH_MAX	4096
 # define MAX_COMMAND_LENGTH 131072
@@ -48,5 +40,9 @@
 /* Exit status management */
 void	set_exit_status(int status);
 int		get_exit_status(void);
+
+/* Shell initialization and cleanup */
+t_env	*init_shell(char **envp);
+void	cleanup_shell(t_env *env);
 
 #endif

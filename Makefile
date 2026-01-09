@@ -71,6 +71,7 @@ SRC += $(DEBUG_DIR)lexer_debug.c \
 
 UTILS_DIR = utils/
 SRC += $(UTILS_DIR)exit_status.c \
+	   $(UTILS_DIR)shell_init.c
 
 ENV_DIR = env/
 SRC += $(ENV_DIR)env_conversion.c \
@@ -133,3 +134,11 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+leak: $(NAME)
+	@echo "Quick leak check..."
+	@echo -e 'pwd\nexit' | valgrind --leak-check=full \
+		--show-leak-kinds=definite,possible \
+		./my_shell 2>&1 | grep -E "LEAK SUMMARY|definitely lost|possibly lost" -A 2
+
+.PHONY: all clean fclean re leak

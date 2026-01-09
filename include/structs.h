@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:10:09 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 15:33:02 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:39:42 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "types.h"
 
-typedef struct s_token		t_token;
-typedef struct s_command	t_command;
-typedef struct s_word_part	t_word_part;
-typedef struct s_redirect	t_redirect;
-typedef struct s_ast_node	t_ast_node;
-typedef struct s_env_var	t_env_var;
-typedef struct s_env		t_env;
+typedef struct s_token			t_token;
+typedef struct s_command		t_command;
+typedef struct s_word_part		t_word_part;
+typedef struct s_redirect		t_redirect;
+typedef struct s_ast_node		t_ast_node;
+typedef struct s_env_var		t_env_var;
+typedef struct s_env			t_env;
 
 struct s_token
 {
@@ -72,8 +72,8 @@ struct s_env_var
 
 struct s_env
 {
-	t_env_var	*vars;
-	int			last_exit_status;
+	t_env_var			*vars;
+	int					last_exit_status;
 }	;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 16:45:34 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:39:38 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,13 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	env = init_env(envp);
+	env = init_shell(envp);
 	if (!env)
 		return (1);
-	display_banner();
 	setup_signals_interactive();
 	while (1)
 	{
-		input = readline(get_colored_prompt());
+		input = readline(build_prompt());
 		if (!input)
 			break ;
 		if (input[0])
@@ -63,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(input);
 	}
-	free_env(env);
+	rl_clear_history();
+	cleanup_shell(env);
 	return (0);
 }

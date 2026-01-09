@@ -1,3 +1,4 @@
 .vscode
 tests
-run_tests.sh
+*.supp
+*.sh

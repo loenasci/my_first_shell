@@ -6,22 +6,71 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 18:58:14 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:39:33 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-/*
-** Retorna um prompt sem usar defines - construção manual
-** Formato: [my_shell] ➜ em verde
-** \001 = início de sequência invisível
-** \002 = fim de sequência invisível
-** \033[32m = verde
-** \033[0m = reset
-** ➜ = U+279C (UTF-8: \xe2\x9e\x9c)
-*/
-char	*get_colored_prompt(void)
+static int	should_use_colors(void)
 {
-	return ("\001\033[32m\002[my_shell]\001\033[0m\002 ➜ ");
+	char	*no_color;
+
+	if (!isatty(STDOUT_FILENO))
+		return (0);
+	no_color = getenv("NO_COLOR");
+	if (no_color && no_color[0])
+		return (0);
+	return (1);
+}
+
+static int	supports_utf8(void)
+{
+	char	*locale;
+
+	locale = getenv("LANG");
+	if (!locale)
+		locale = getenv("LC_ALL");
+	if (!locale)
+		locale = getenv("LC_CTYPE");
+	if (locale && (ft_strstr(locale, "UTF-8") || ft_strstr(locale, "utf8")))
+		return (1);
+	return (0);
+}
+
+static char	*get_prompt_style(int use_colors, int use_utf8)
+{
+	char	*style;
+
+	style = getenv("MYSH_PROMPT_STYLE");
+	if (style)
+	{
+		if (ft_strcmp(style, "minimal") == 0)
+		{
+			if (use_colors)
+				return (RL_COLOR_GREEN "my_shell" RL_COLOR_RESET " $ ");
+			return ("$ ");
+		}
+		if (ft_strcmp(style, "fancy") == 0 && use_utf8)
+		{
+			if (use_colors)
+				return (RL_COLOR_BOLD_GREEN "my_shell" RL_COLOR_RESET ":" \
+					RL_COLOR_BOLD_BLUE "~" RL_COLOR_RESET " ➜ ");
+			return ("my_shell:~ ➜ ");
+		}
+	}
+	if (use_colors)
+		return (RL_COLOR_BLUE "my_shell" RL_COLOR_RESET ":" \
+			RL_COLOR_CYAN "~" RL_COLOR_RESET "> ");
+	return ("[my_shell]> ");
+}
+
+char	*build_prompt(void)
+{
+	int	use_colors;
+	int	use_utf8;
+
+	use_colors = should_use_colors();
+	use_utf8 = supports_utf8();
+	return (get_prompt_style(use_colors, use_utf8));
 }
