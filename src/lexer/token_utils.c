@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:30:00 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/19 16:02:28 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:43:02 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,23 @@ t_token	*token_new(t_token_type type, char *value, int pos)
 t_token	*create_single_token(char *op_string,
 			t_token_type type, int *i, int pos)
 {
-	char	*value;
+	t_token	*token;
 
-	value = ft_strdup(op_string);
-	if (!value)
-		return (NULL);
 	(*i) += ft_strlen(op_string);
-	return (token_new(type, value, pos));
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->type = type;
+	token->value = ft_strdup(op_string);
+	if (!token->value)
+	{
+		free(token);
+		return (NULL);
+	}
+	token->pos = pos;
+	token->parts = NULL;
+	token->next = NULL;
+	return (token);
 }
 
 void	token_free(t_token *token)
