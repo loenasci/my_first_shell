@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:52:17 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 19:04:42 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/07 21:45:53 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void		free_exec_and_exit(char *exec);
 int			execute_ast(t_ast_node *node, t_env *env);
 int			execute_command(t_command *cmd, t_env *env);
 int			execute_pipe(t_ast_node *node, t_env *env);
-
-/*--------- file builtin executor ------------------------*/
-int			execute_builtin_files(char **args, t_env *env);
 
 /*--------- general builtin executor ---------------------*/
 int			execute_builtin(char **args, t_env *env);
