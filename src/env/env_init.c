@@ -86,6 +86,8 @@ t_env	*init_env(char **envp)
 		return (NULL);
 	env->vars = NULL;
 	env->last_exit_status = 0;
+	env->should_exit = 0;
+	env->exit_code = 0;
 	i = 0;
 	while (envp && envp[i])
 	{

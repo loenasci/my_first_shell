@@ -1,38 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_init.c                                       :+:      :+:    :+:   */
+/*   execute_pipe_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/06 19:39:01 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 20:14:38 by lsarraci         ###   ########.fr       */
+/*   Created: 2026/01/08 17:26:48 by lsarraci          #+#    #+#             */
+/*   Updated: 2026/01/08 19:05:03 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-t_env	*init_shell(char **envp)
+void	set_exit(t_ast_node *node, t_env *env)
 {
-	t_env	*env;
-
-	env = init_env(envp);
-	if (!env)
-		return (NULL);
-	display_banner();
-	return (env);
+	if (!node)
+		exit(1);
+	if (node->type == NODE_PIPE)
+		exit(execute_pipe(node, env));
+	if (node->type != NODE_COMMAND || !node->cmd)
+		exit(1);
+	if (!node->cmd->args || !node->cmd->args[0])
+		exit(0);
+	if (is_builtin(node->cmd->args[0]))
+		exit(execute_builtin(node->cmd->args, env));
 }
 
-void	cleanup_shell(t_env *env)
+void	free_exec_and_exit(char *exec)
 {
-	if (!env)
-		return ;
-	free_env(env);
-}
-
-void	shell_cleanup_and_exit(t_env *env, int exit_code)
-{
-	rl_clear_history();
-	cleanup_shell(env);
-	exit(exit_code);
+	free(exec);
+	exit(1);
 }

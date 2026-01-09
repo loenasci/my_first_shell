@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:45 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 18:56:51 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/08 14:23:20 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	setup_signals_interactive(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	t_sigaction	sa_int;
+	t_sigaction	sa_quit;
 
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);
@@ -29,7 +29,7 @@ void	setup_signals_interactive(void)
 
 void	setup_signals_executing(void)
 {
-	struct sigaction	sa;
+	t_sigaction	sa;
 
 	sa.sa_handler = SIG_DFL;
 	sigemptyset(&sa.sa_mask);
@@ -40,8 +40,8 @@ void	setup_signals_executing(void)
 
 void	setup_signals_heredoc(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	t_sigaction	sa_int;
+	t_sigaction	sa_quit;
 
 	sa_int.sa_handler = handle_sigint;
 	sigemptyset(&sa_int.sa_mask);

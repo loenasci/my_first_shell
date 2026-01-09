@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:23:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 19:39:45 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:34:36 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -44,5 +46,13 @@ int		get_exit_status(void);
 /* Shell initialization and cleanup */
 t_env	*init_shell(char **envp);
 void	cleanup_shell(t_env *env);
+
+/* Shell signal utilities */
+int		check_signal_received(void);
+int		was_interrupted(void);
+void	handle_signal_after_readline(char **input);
+void	handle_signal_after_execution(void);
+int		should_exit_shell(char *input);
+void	shell_cleanup_and_exit(t_env *env, int exit_code);
 
 #endif

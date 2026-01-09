@@ -20,17 +20,20 @@ int	builtin_exit(char **args, t_env *env)
 	ft_printf("exit\n");
 	arg_count = count_args(args);
 	if (arg_count == 1)
-		exit(env->last_exit_status);
-	if (!is_numeric(args[1]))
+		exit_code = env->last_exit_status;
+	else if (!is_numeric(args[1]))
 	{
 		ft_printf("minishell: exit %s: numeric argument required\n", args[1]);
-		exit(255);
+		exit_code = 255;
 	}
-	if (arg_count > 2)
+	else if (arg_count > 2)
 	{
-		ft_printf("minishell: exit: too many arguments");
+		ft_printf("minishell: exit: too many arguments\n");
 		return (1);
 	}
-	exit_code = ft_atoi(args[1]);
-	exit(exit_code % 256);
+	else
+		exit_code = ft_atoi(args[1]);
+	env->should_exit = 1;
+	env->exit_code = exit_code % 256;
+	return (0);
 }

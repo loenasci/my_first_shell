@@ -39,10 +39,43 @@ static void	process_input(char *input, t_env *env)
 	token_list_free(tokens);
 }
 
-int	main(int argc, char **argv, char **envp)
+static int	process_line(char *input, t_env *env)
+{
+	if (!input[0])
+		return (0);
+	add_history(input);
+	process_input(input, env);
+	handle_signal_after_execution();
+	return (env->should_exit);
+}
+
+static void	shell_loop(t_env *env)
 {
 	char	*input;
+
+	while (1)
+	{
+		input = readline(build_prompt());
+		if (should_exit_shell(input))
+		{
+			ft_printf("exit\n");
+			break ;
+		}
+		handle_signal_after_readline(&input);
+		if (input && process_line(input, env))
+		{
+			free(input);
+			break ;
+		}
+		if (input)
+			free(input);
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
 	t_env	*env;
+	int		exit_code;
 
 	(void)argc;
 	(void)argv;
@@ -50,19 +83,9 @@ int	main(int argc, char **argv, char **envp)
 	if (!env)
 		return (1);
 	setup_signals_interactive();
-	while (1)
-	{
-		input = readline(build_prompt());
-		if (!input)
-			break ;
-		if (input[0])
-		{
-			add_history(input);
-			process_input(input, env);
-		}
-		free(input);
-	}
+	shell_loop(env);
+	exit_code = env->exit_code;
 	rl_clear_history();
 	cleanup_shell(env);
-	return (0);
+	return (exit_code);
 }
