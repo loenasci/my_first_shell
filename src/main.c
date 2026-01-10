@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 15:31:13 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 18:16:29 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	process_line(char *input, t_env *env)
 	add_history(input);
 	process_input(input, env);
 	handle_signal_after_execution();
+	ensure_newline_for_prompt();
 	return (env->should_exit);
 }
 
