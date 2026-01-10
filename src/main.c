@@ -17,13 +17,11 @@ static void	process_input(char *input, t_env *env)
 	t_token		*tokens;
 	t_ast_node	*tree;
 	int			status;
-	char		*debug_mode;
 
-	debug_mode = getenv("DEBUG");
 	tokens = lexer(input, 0);
 	if (!tokens)
 		return ;
-	if (debug_mode && ft_strcmp(debug_mode, "1") == 0)
+	if (is_debug_enabled())
 		print_tokens(tokens);
 	tree = parse_tokens(tokens);
 	if (!tree)
@@ -31,7 +29,7 @@ static void	process_input(char *input, t_env *env)
 		token_list_free(tokens);
 		return ;
 	}
-	if (debug_mode && ft_strcmp(debug_mode, "1") == 0)
+	if (is_debug_enabled())
 		print_ast(tree);
 	status = execute_ast(tree, env);
 	env->last_exit_status = status;
