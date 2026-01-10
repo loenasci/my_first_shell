@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 13:51:11 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/07 21:35:14 by loda-sil         ###   ########.fr       */
+/*   Updated: 2026/01/10 14:10:30 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static int	has_n_flag(char *arg)
 {
-	int i;
+	int	i;
 
 	if (!arg || arg[0] != '-' || arg[1] != 'n')
 		return (0);
 	i = 1;
-	while (arg[i] != 'n')
+	while (arg[i])
 	{
 		if (arg[i] != 'n')
 			return (0);
@@ -30,8 +30,8 @@ static int	has_n_flag(char *arg)
 
 int	builtin_echo(char **args, t_env *env)
 {
-	int i;
-	int newline;
+	int	i;
+	int	newline;
 
 	(void)env;
 	newline = 1;

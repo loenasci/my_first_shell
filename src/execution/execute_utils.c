@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 15:16:54 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/02 17:24:23 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 14:31:35 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ int	is_numeric(char *str)
 		i++;
 	}
 	return (1);
+}
+
+char	*define_executable(t_command *cmd, t_env *env)
+{
+	char	*executable;
+
+	executable = find_executable(cmd->args[0], env);
+	if (!executable)
+	{
+		ft_printf("%s: command not found\n", cmd->args[0]);
+		return (NULL);
+	}
+	return (executable);
 }

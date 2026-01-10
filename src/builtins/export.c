@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:43:44 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/09 17:38:30 by loda-sil         ###   ########.fr       */
+/*   Updated: 2026/01/10 14:33:15 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-static void print_sorted_env(t_env *env)
+static void	print_sorted_env(t_env *env)
 {
-	t_env_var *current;
+	t_env_var	*current;
 
 	current = env->vars;
 	while (current)
@@ -24,20 +24,19 @@ static void print_sorted_env(t_env *env)
 	}
 }
 
-static void valid_identifier(char **key, char **arg)
+static void	valid_identifier(char **key, char **arg)
 {
-	if (!is_valid_identifier(*key))
-	{
-		ft_printf("minishell: export: `%s': not a valid identifier\n", *arg);
-		free(*key);
-	}
+	if (is_valid_identifier(*key))
+		return ;
+	ft_printf("minishell: export: `%s': not a valid identifier\n", *arg);
+	free(*key);
 }
 
-static int process_export_arg(char *arg, t_env *env)
+static int	process_export_arg(char *arg, t_env *env)
 {
-	char *equal_sign;
-	char *key;
-	char *value;
+	char	*equal_sign;
+	char	*key;
+	char	*value;
 
 	equal_sign = ft_strchr(arg, '=');
 	if (!equal_sign)
@@ -58,9 +57,9 @@ static int process_export_arg(char *arg, t_env *env)
 	return (0);
 }
 
-int builtin_export(char **args, t_env *env)
+int	builtin_export(char **args, t_env *env)
 {
-	int i;
+	int	i;
 
 	if (!env)
 		return (1);

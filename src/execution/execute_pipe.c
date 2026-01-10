@@ -18,6 +18,8 @@ static void	execute_in_child(t_ast_node *node, t_env *env)
 	char	**envp;
 
 	set_exit(node, env);
+	if (!apply_redirects(node->cmd))
+		exit(1);
 	executable = find_executable(node->cmd->args[0], env);
 	if (!executable)
 	{

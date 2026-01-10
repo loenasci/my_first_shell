@@ -7,13 +7,15 @@ EXEC_DIR = execution/
 SRC += $(EXEC_DIR)execution_main.c \
        $(EXEC_DIR)execute_command.c \
        $(EXEC_DIR)execute_builtin.c \
+	   $(EXEC_DIR)execute_builtin_files.c \
        $(EXEC_DIR)execute_pipe.c \
 	   $(EXEC_DIR)execute_pipe_utils.c \
        $(EXEC_DIR)execute_logical.c \
        $(EXEC_DIR)execute_utils.c \
 	   $(EXEC_DIR)execute_redirects.c \
-	   $(EXEC_DIR)execute_redirects_checks.c \
-	   $(EXEC_DIR)execute_redirects_utils.c 
+	   $(EXEC_DIR)execute_redirects_helpers.c \
+	   $(EXEC_DIR)execute_redirects_utils.c \
+	   $(EXEC_DIR)execute_external.c
 
 BUILTINS_DIR = builtins/
 SRC += $(BUILTINS_DIR)cd.c \

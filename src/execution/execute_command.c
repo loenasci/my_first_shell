@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:54:59 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/09 19:26:09 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 14:32:47 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,13 @@ int	execute_command(t_command *cmd, t_env *env)
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (0);
+	if (is_builtin(cmd->args[0]) && cmd->redirects)
+		return (execute_redirects(cmd, -1, env));
 	if (is_builtin(cmd->args[0]))
 		return (execute_builtin(cmd->args, env));
-	executable = find_executable(cmd->args[0], env);
+	executable = define_executable(cmd, env);
 	if (!executable)
-	{
-		ft_printf("%s: command not found\n", cmd->args[0]);
 		return (127);
-	}
 	setup_signals_executing();
 	pid = fork();
 	if (pid == -1)

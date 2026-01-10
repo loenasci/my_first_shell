@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:37:29 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/09 20:23:18 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 14:20:04 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ int	execute_redirects(t_command *command, int fd, t_env *env)
 	resolve_fd(&fd);
 	if (!apply_redirects(command))
 		return (close_and_exit(saved_stdin, saved_stdout, 1));
-	exit_status = decide_command_type(command->args, env);
+	exit_status = execute_builtin(command->args, env);
 	return (close_and_exit(saved_stdin, saved_stdout, exit_status));
 }

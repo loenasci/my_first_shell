@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 17:23:50 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/23 17:40:38 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 13:57:56 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ int	process_heredoc(char *delimiter)
 
 	pipe(pipe_fds);
 	clean_delim = clear_heredoc_delimiter(delimiter);
+	signal_enter_heredoc();
 	read_heredoc_content(pipe_fds[1], delimiter, clean_delim);
+	signal_exit_heredoc();
 	free(clean_delim);
 	close(pipe_fds[1]);
 	return (pipe_fds[0]);

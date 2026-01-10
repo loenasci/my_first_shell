@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   execute_external.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/02 18:44:06 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 13:59:41 by lsarraci         ###   ########.fr       */
+/*   Created: 2026/01/10 13:45:48 by lsarraci          #+#    #+#             */
+/*   Updated: 2026/01/10 13:59:06 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-int	builtin_unset(char **args, t_env *env)
+int	execute_external_command(char **args, t_env *env)
 {
-	int	i;
+	t_command	cmd;
 
-	if (!env)
-		return (1);
-	i = 1;
-	while (args[i])
-	{
-		if (!is_valid_identifier(args[i]))
-		{
-			ft_printf("minishell: unset: '%s': not a valid identifier\n",
-				args[i]);
-			return (1);
-		}
-		else
-			env_unset(env, args[i]);
-		i++;
-	}
-	return (0);
+	if (!args || !args[0])
+		return (0);
+	cmd.args = args;
+	cmd.redirects = NULL;
+	return (execute_command(&cmd, env));
 }

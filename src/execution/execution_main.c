@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:51:37 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/09 20:23:37 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 14:20:35 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,4 @@ int	execute_ast(t_ast_node *node, t_env *env)
 	if (node->type == NODE_PIPE)
 		return (execute_pipe(node, env));
 	return (1);
-}
-
-int	main_executor(t_ast_node *root, t_env *env)
-{
-	int	exit_status;
-
-	if (!root)
-		return (0);
-	if (env->should_exit)
-		return (env->exit_code);
-	if (root->type == NODE_COMMAND && !root->cmd)
-		return (0);
-	if (is_redirect_needed(root->cmd))
-		execute_redirects(root->cmd, -1, env);
-	exit_status = execute_ast(root, env);
-	env->last_exit_status = exit_status;
-	return (exit_status);
 }
