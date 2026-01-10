@@ -124,10 +124,64 @@ if [ $SUITES_FAILED -eq 0 ]; then
     echo -e "${GREEN}════════════════════════════════════════${NC}"
     echo -e "${GREEN}   ✓ ALL TEST SUITES PASSED!${NC}"
     echo -e "${GREEN}════════════════════════════════════════${NC}"
-    exit 0
 else
     echo -e "${RED}════════════════════════════════════════${NC}"
     echo -e "${RED}   ✗ SOME TEST SUITES FAILED${NC}"
     echo -e "${RED}════════════════════════════════════════${NC}"
+fi
+
+# Cleanup
+echo ""
+echo "========================================="
+echo "           CLEANUP"
+echo "========================================="
+echo ""
+
+echo -e "${BLUE}Removing test artifacts...${NC}"
+rm -f /tmp/test_*.txt
+rm -f test_*.txt
+rm -f testfile*.txt
+rm -f output*.txt
+rm -f input*.txt
+rm -f append*.txt
+rm -f heredoc*.txt
+rm -f newfile*.txt
+rm -f tmpfile*.txt
+cd "$(dirname "$0")"
+rm -f test_*.txt
+rm -f testfile*.txt
+rm -f output*.txt
+rm -f input*.txt
+rm -f append*.txt
+rm -f heredoc*.txt
+rm -f newfile*.txt
+rm -f tmpfile*.txt
+rm -f count.txt
+rm  -f file.txt
+rm -f file
+rm -f a
+rm -f b
+rm -f c
+rm -f d
+rm -f e
+rm -f f
+rm -f g
+rm -f h
+rm -f i
+rm -f j
+rm -f out.txt
+rm -f result.txt
+rm -f *.tmp
+cd - > /dev/null
+echo -e "${GREEN}✓ Test files cleaned${NC}"
+
+echo -e "${BLUE}Running make fclean...${NC}"
+make -C .. fclean > /dev/null 2>&1
+echo -e "${GREEN}✓ Build artifacts cleaned${NC}"
+
+echo ""
+if [ $SUITES_FAILED -eq 0 ]; then
+    exit 0
+else
     exit 1
 fi
