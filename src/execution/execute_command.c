@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:54:59 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 14:32:47 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:09:38 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,10 @@ static int	wait_child(pid_t pid)
 	return (1);
 }
 
-int	execute_command(t_command *cmd, t_env *env)
+static int	fork_and_execute(t_command *cmd, char *executable, t_env *env)
 {
-	char	*executable;
 	pid_t	pid;
 
-	if (!cmd || !cmd->args || !cmd->args[0])
-		return (0);
-	if (is_builtin(cmd->args[0]) && cmd->redirects)
-		return (execute_redirects(cmd, -1, env));
-	if (is_builtin(cmd->args[0]))
-		return (execute_builtin(cmd->args, env));
-	executable = define_executable(cmd, env);
-	if (!executable)
-		return (127);
 	setup_signals_executing();
 	pid = fork();
 	if (pid == -1)
@@ -67,4 +57,22 @@ int	execute_command(t_command *cmd, t_env *env)
 		child_process(cmd, executable, env);
 	free(executable);
 	return (wait_child(pid));
+}
+
+int	execute_command(t_command *cmd, t_env *env)
+{
+	char	*executable;
+	int		handled;
+
+	handled = empty_handle_manager(cmd, env);
+	if (handled != -1)
+		return (handled);
+	if (is_builtin(cmd->args[0]) && cmd->redirects)
+		return (execute_redirects(cmd, -1, env));
+	if (is_builtin(cmd->args[0]))
+		return (execute_builtin(cmd->args, env));
+	executable = define_executable(cmd, env);
+	if (!executable)
+		return (127);
+	return (fork_and_execute(cmd, executable, env));
 }

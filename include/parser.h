@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:11:15 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 16:00:13 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 15:22:07 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ int			setup_heredoc(t_redirect *redir);
 void		close_heredoc_fd(t_redirect *redir);
 void		cleanup_heredoc_fds(t_redirect *redir);
 int			process_all_heredocs(t_command *cmd);
+
+/* environment variable setting*/
+
+void		set_shell_env(t_env	*env);
+t_env		*get_shell_env(void);
+void		reset_shell_env(void);
 
 /* Syntax validation */
 int			validate_syntax(t_token *tokens);

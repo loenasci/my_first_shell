@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:52:17 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 14:32:00 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 16:06:36 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,17 @@ int			apply_redir_out(t_redirect *redir);
 int			apply_append(t_redirect *redir);
 int			apply_heredoc(t_redirect *redir);
 int			apply_redirects(t_command *cmd);
+int			empty_handle_manager(t_command *cmd, t_env *env);
 
 /*--------- execiton main functions ----------------------*/
 int			execute_ast(t_ast_node *node, t_env *env);
 int			execute_command(t_command *cmd, t_env *env);
 int			execute_redirects(t_command *command, int fd, t_env *env);
 int			execute_pipe(t_ast_node *node, t_env *env);
+int			execute_logical_and(t_ast_node *left, t_ast_node *right,
+				t_env *env);
+int			execute_logical_or(t_ast_node *left, t_ast_node *right,
+				t_env *env);
 char		*define_executable(t_command *cmd, t_env *env);
 int			execute_external_command(char **args, t_env *env);
 

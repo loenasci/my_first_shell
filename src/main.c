@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/06 19:39:38 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 15:31:13 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ int	main(int argc, char **argv, char **envp)
 	env = init_shell(envp);
 	if (!env)
 		return (1);
+	set_shell_env(env);
 	setup_signals_interactive();
 	shell_loop(env);
 	exit_code = env->exit_code;
 	rl_clear_history();
 	cleanup_shell(env);
+	reset_shell_env();
 	return (exit_code);
 }

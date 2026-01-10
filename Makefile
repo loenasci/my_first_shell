@@ -13,6 +13,7 @@ SRC += $(EXEC_DIR)execution_main.c \
        $(EXEC_DIR)execute_logical.c \
        $(EXEC_DIR)execute_utils.c \
 	   $(EXEC_DIR)execute_redirects.c \
+	   $(EXEC_DIR)execute_handles.c \
 	   $(EXEC_DIR)execute_redirects_helpers.c \
 	   $(EXEC_DIR)execute_redirects_utils.c \
 	   $(EXEC_DIR)execute_external.c
@@ -55,6 +56,7 @@ SRC +=	$(PARSER_UTILS_DIR)command_utils.c \
 		$(PARSER_UTILS_DIR)parser_utils.c \
 		$(PARSER_UTILS_DIR)parser_command.c \
 		$(PARSER_UTILS_DIR)parser_errors.c \
+		$(PARSER_UTILS_DIR)parser_env_accessor.c \
 		$(PARSER_UTILS_DIR)parser_error_msg.c \
 		$(PARSER_UTILS_DIR)parser_error_utils.c \
 		$(PARSER_UTILS_DIR)parser_build.c \

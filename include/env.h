@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:50:56 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/09 19:24:05 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 16:54:28 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_env_var	*env_get(t_env *env, char *key);
 void		env_set(t_env *env, char *key, char *value);
 void		env_unset(t_env *env, char *key);
 char		*get_env_value(t_env *env, char *key);
+void		add_env_node_to_end(t_env *env, t_env_var *node);
 
 /*--------- environment conversion -----------------*/
 char		**env_to_array(t_env *env);

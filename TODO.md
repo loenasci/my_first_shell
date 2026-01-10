@@ -1,8 +1,8 @@
 # Minishell - Project Status
 
-**Last Updated:** January 8, 2026  
-**Overall Completion:** 85%  
-**Total Tests:** 92/92 (100% passing)  
+**Last Updated:** January 10, 2026  
+**Overall Completion:** 100%  
+**Total Tests:** 321/321 (100% passing)  
 **Memory Leaks:** 0 (valgrind verified)  
 **Norminette:** 100% compliant
 
@@ -11,16 +11,15 @@
 ## 📊 Project Overview
 
 **Status Legend:**
-- ✅ Completed
-- 🔄 In Progress  
-- 🎯 Next Priority
+- ✅ Completed and Tested
+- 🎉 **PROJECT COMPLETE**
 
-**Current Milestone:** External Commands + Pipes Working  
-**Next Milestone:** Logical Operators + Redirections
+**Current Milestone:** ✅ ALL FEATURES IMPLEMENTED  
+**Production Ready:** YES
 
 ---
 
-## ✅ Completed Modules (78% - 7/9 phases)
+## ✅ Completed Modules (100% - 9/9 phases)
 
 ### ✅ Phase 1: Lexer (100%)
 - Tokenization with operators (PIPE, AND, OR, redirections)
@@ -34,28 +33,32 @@
 ### ✅ Phase 2: Environment Management (100%)
 - Environment initialization from envp
 - SHLVL auto-increment
-- Get/set/unset operations
+- Get/set/unset operations with FIFO ordering
 - Array conversion for execve
+- Singleton pattern for environment access (get_shell_env/set_shell_env)
 - **Files:** env_init.c, env_utils.c, env_node_utils.c, env_conversion.c
-- **Tests:** Integrated with other modules
+- **Functions:** add_env_node_to_end() for proper variable ordering
+- **Tests:** 37/37 environment variable tests passing
 
 ### ✅ Phase 3: Parser (100%)
 - AST generation (CMD, PIPE, AND, OR nodes)
 - Command parsing with arguments
 - Redirect parsing (<, >, >>, <<)
 - Heredoc processing with FD management
-- Variable expansion
+- Variable expansion in all contexts
+- Double quote variable expansion ($VAR in "string $VAR")
 - Quote processing
 - Error handling
-- **Files:** parser_build.c, parser_command.c, parser_expansion.c, heredoc_utils.c, etc.
-- **Tests:** 18/18 passing, heredoc 19/19 passing
+- Environment accessor with singleton pattern
+- **Files:** parser_build.c, parser_command.c, parser_expansion.c, parser_env_accessor.c, heredoc_utils.c, etc.
+- **Tests:** 18/18 parser tests, 19/19 heredoc tests
 
 ### ✅ Phase 4: Signal Management (100%)
 - Signal handlers (SIGINT, SIGQUIT, SIGTERM)
 - Three modes: interactive, executing, heredoc
 - State management (g_signal_mode, g_last_signal)
 - Signal restoration utilities
-- **Files:** signals.c, signals_utils.c
+- **Files:** signals.c, signals_utils.c, signals_setup.c, signals_heredoc.c
 - **Tests:** 15/15 signal tests, 5/5 state tests
 
 ### ✅ Phase 5: File Manager (100%)
@@ -73,8 +76,8 @@
 - Exit code capture (waitpid)
 - Error handling (command not found, permission denied)
 - Memory safety (0 leaks)
-- **Files:** execute_command.c, execute_utils.c
-- **Functions:** execute_command(), child_process(), wait_child()
+- **Files:** execute_external.c, execute_command.c, execute_utils.c
+- **Tests:** 12/12 external command tests
 
 ### ✅ Phase 7: Pipes (100%)
 - pipe() system call for IPC
@@ -82,109 +85,119 @@
 - FD redirection (dup2)
 - Parent FD management
 - Multi-stage pipeline support
-- **Files:** execute_pipe.c
+- **Files:** execute_pipe.c, execute_pipe_utils.c
 - **Functions:** execute_pipe(), setup_left_child(), setup_right_child(), wait_both_children()
+- **Tests:** 13/13 pipe tests
 
----
+### ✅ Phase 8: Builtins (100%)
+**All 7 Required Builtins Implemented:**
+- ✅ pwd - Print working directory
+- ✅ cd - Change directory (with HOME support, OLDPWD, error handling)
+- ✅ echo - Print arguments (with -n flag)
+- ✅ env - Print environment variables
+- ✅ export - Set/list environment variables (with validation)
+- ✅ unset - Remove environment variables
+- ✅ exit - Exit shell with code (with validation and modulo 256)
 
-## 🔄 In Progress Modules (7% - 1/9 phases)
+**Files:** src/builtins/{pwd.c, cd.c, echo.c, env.c, export.c, unset.c, exit.c}  
+**Tests:** 20/20 builtin tests passing
 
-### 🔄 Phase 8: Builtins (30%)
-**Working:**
-- [x] pwd - Print working directory
-- [x] exit - Exit shell with code
-
-**Pending:**
-- [ ] cd - Change directory (with HOME support)
-- [ ] echo - Print arguments (with -n flag)
-- [ ] env - Print environment variables
-- [ ] export - Set/list environment variables
-- [ ] unset - Remove environment variables
-
-**Files:** src/builtins/{pwd.c, exit.c, cd.c, echo.c, env.c, export.c, unset.c}
-
----
-
-## 🎯 Pending Modules (15% - 1/9 phases)
-
-### 🎯 Phase 9: Executor Completion (0%)
+### ✅ Phase 9: Executor Completion (100%)
 
 **Logical Operators:**
-- [ ] AND (&&) - execute right only if left succeeds
-- [ ] OR (||) - execute right only if left fails
-- [ ] Exit code propagation
-- [ ] Update execution_main.c to handle NODE_AND and NODE_OR
+- ✅ AND (&&) - execute right only if left succeeds (exit code 0)
+- ✅ OR (||) - execute right only if left fails (exit code != 0)
+- ✅ Exit code propagation
+- ✅ Complex logical chains
+- **Files:** execute_logical.c
+- **Tests:** 34/34 logical operator tests
 
 **Redirections:**
-- [ ] Input redirection (<)
-- [ ] Output redirection (>)
-- [ ] Append redirection (>>)
-- [ ] FD management and error handling
-- [ ] Integration with execute_command.c
-
-**Files:** execute_logical.c (to be implemented), execute_command.c (add redirections)
+- ✅ Input redirection (<)
+- ✅ Output redirection (>)
+- ✅ Append redirection (>>)
+- ✅ Heredoc redirection (<<)
+- ✅ FD management and error handling
+- ✅ Empty redirect handling (> file creates 0-byte file)
+- ✅ Multiple redirects in same command
+- **Files:** execute_redirects.c, execute_redirects_helpers.c, execute_redirects_utils.c, execute_handles.c
+- **Functions:** apply_redirects(), handle_redirect_only(), handle_input_redirect(), handle_output_redirect(), handle_append_redirect()
+- **Tests:** 15/15 redirection tests, 32/32 file operation tests
 
 ---
 
 ## 📈 Testing Infrastructure (100%)
 
-### Test Suites (92/92 tests - 100% passing)
-- [x] Lexer tests (27) - Tokenization, quotes, variables
-- [x] Parser tests (18) - AST generation
-- [x] Heredoc tests (19) - Delimiter and FD management
-- [x] Signal tests (15) - Handler modes
-- [x] State tests (5) - Global signal state
-- [x] Integration tests (8) - End-to-end scenarios
+### Test Suites (321/321 tests - 100% passing)
+- ✅ Lexer tests (27) - Tokenization, quotes, variables
+- ✅ Parser tests (18) - AST generation
+- ✅ Heredoc tests (19) - Delimiter and FD management
+- ✅ Signal tests (15) - Handler modes
+- ✅ State tests (5) - Global signal state
+- ✅ Integration tests (8) - End-to-end scenarios
+- ✅ Builtin tests (20) - All 7 builtins
+- ✅ Redirection tests (15) - Input, output, append
+- ✅ Pipe tests (13) - Multi-stage pipelines
+- ✅ External commands (12) - PATH resolution and execution
+- ✅ Logical operators (34) - AND/OR with all combinations
+- ✅ Environment variables (37) - Export, unset, expansion
+- ✅ File operations (32) - Complex file scenarios
+- ✅ Segfault detection (66) - Edge cases and error handling
+
+### Test Scripts
+- ✅ run_all_tests.sh - Master test runner (14 suites)
+- ✅ test_segfault.sh - 66 edge cases, 0 segfaults detected
 
 ### Test Documentation
-- [x] tests/README.md - Comprehensive testing guide
-- [x] HEREDOC_TESTS.md - Heredoc-specific documentation
-- [x] TESTS.md - General test overview
-- [x] MEMORY_LEAKS.md - Valgrind analysis
+- ✅ tests/README.md - Comprehensive testing guide
+- ✅ HEREDOC_TESTS.md - Heredoc-specific documentation
+- ✅ TESTS.md - General test overview
+- ✅ MEMORY_LEAKS.md - Valgrind analysis
 
 ---
 
-## 🎯 Next Steps (Priority Order)
+## 🎉 Project Complete!
+---
 
-1. **Logical Operators** - Implement execute_logical.c (NODE_AND, NODE_OR)
-2. **Redirections** - Add FD redirection to execute_command.c (<, >, >>)
-3. **Remaining Builtins** - Complete cd, echo, env, export, unset
-4. **Edge Cases** - Complex combinations and error scenarios
-5. **Final Testing** - Integration tests for all features
+## 🎉 Project Complete!
+
+All mandatory features have been implemented and tested. The minishell is production-ready!
 
 ---
 
-## 📊 Recent Progress (January 8, 2026)
+## 📊 Recent Progress (January 10, 2026)
 
-### File Manager Implementation
-- ✅ find_executable() with PATH search
-- ✅ Helper functions (check_direct_path, search_in_paths, build_full_path)
-- ✅ get_default_path() for fallback values
-- ✅ is_directory() for directory detection
-- ✅ All functions norminette compliant (< 25 lines)
+### Final Sprint - All Features Completed!
 
-### External Command Execution
-- ✅ Refactored execute_command.c with fork/execve
-- ✅ child_process() handles execve with env cleanup
-- ✅ wait_child() manages status and signal restoration
-- ✅ Memory safety verified (0 leaks)
-- ✅ Error handling (command not found, permission denied)
+**Builtins Implementation:**
+- ✅ All 7 builtins working perfectly (cd, echo, env, export, unset, pwd, exit)
+- ✅ Export with identifier validation
+- ✅ Exit code modulo 256
+- ✅ CD with HOME, OLDPWD support
 
-### Pipe Execution
-- ✅ Implemented execute_pipe.c with child setup functions
-- ✅ setup_left_child() redirects stdout to pipe[1]
-- ✅ setup_right_child() redirects stdin from pipe[0]
-- ✅ Parent closes both pipe FDs to avoid deadlock
-- ✅ Dual waitpid() for both children
-- ✅ Multi-stage pipeline support (ls | grep | wc)
-- ✅ Integration with execution_main.c (NODE_PIPE)
+**Logical Operators:**
+- ✅ AND (&&) and OR (||) fully functional
+- ✅ Short-circuit evaluation
+- ✅ Exit code propagation
+- ✅ Complex logical chains
 
-### Test Suite Expansion
-- ✅ Added 27 lexer tests (tokenization)
-- ✅ Added 18 parser tests (AST generation)
-- ✅ Added 19 heredoc tests (delimiter and FD management)
-- ✅ Total: 92 tests, 100% passing
-- ✅ Comprehensive test documentation in tests/README.md
+**Redirections:**
+- ✅ All 4 redirect types (<, >, >>, <<)
+- ✅ Empty redirect creates 0-byte files
+- ✅ FD management without pollution
+- ✅ Multiple redirects per command
+
+**Environment Variables:**
+- ✅ Singleton pattern implementation (get_shell_env/set_shell_env)
+- ✅ Variable expansion in all contexts
+- ✅ Double quote expansion working
+- ✅ FIFO ordering for exported variables (add_env_node_to_end)
+
+**Test Suite Expansion:**
+- ✅ 14 comprehensive test suites
+- ✅ 321 total tests - 100% passing
+- ✅ Segfault detection suite (66 edge cases)
+- ✅ Integrated run_all_tests.sh script
 
 ---
 
@@ -192,9 +205,10 @@
 
 | Metric | Value |
 |--------|-------|
-| **Total Files** | 80+ |
-| **Lines of Code** | ~7000+ |
-| **Test Coverage** | 92/92 tests (100%) |
+| **Total Files** | 85+ |
+| **Lines of Code** | ~8500+ |
+| **Test Coverage** | 321/321 tests (100%) |
+| **Test Suites** | 14/14 passing |
 | **Norminette Status** | ✅ All files pass |
 | **Compilation Status** | ✅ Clean build (0 errors, 0 warnings) |
 | **Memory Leaks** | ✅ 0 definitely lost, 0 possibly lost |
@@ -205,45 +219,88 @@
 | **File Manager Progress** | ✅ 100% |
 | **External Commands** | ✅ 100% |
 | **Pipes Progress** | ✅ 100% |
-| **Builtins Progress** | 🔄 30% |
-| **Executor Progress** | 🔄 70% |
+| **Builtins Progress** | ✅ 100% |
+| **Executor Progress** | ✅ 100% |
+| **Redirections Progress** | ✅ 100% |
+| **Logical Operators** | ✅ 100% |
 
 ---
 
 ## 📝 Documentation
 
 ### Available Documentation
-- [x] DOCUMENTATION_GUIDE.md - Project overview
-- [x] lexer.md - Lexer implementation details
-- [x] HEREDOC_TESTS.md - Heredoc test documentation
-- [x] MEMORY_LEAKS.md - Valgrind analysis
-- [x] TESTS.md - General test documentation
-- [x] tests/README.md - Comprehensive testing guide
-- [x] UPDATE_DEBUG_TESTS.md - Debug utilities
-
-### Pending Documentation
-- [ ] Parser architecture
-- [ ] Executor architecture
-- [ ] Overall project architecture
-- [ ] README.md for project root
+- ✅ DOCUMENTATION_GUIDE.md - Project overview
+- ✅ lexer.md - Lexer implementation details
+- ✅ HEREDOC_TESTS.md - Heredoc test documentation
+- ✅ MEMORY_LEAKS.md - Valgrind analysis
+- ✅ TESTS.md - General test documentation
+- ✅ tests/README.md - Comprehensive testing guide (14 suites)
+- ✅ UPDATE_DEBUG_TESTS.md - Debug utilities
+- ✅ GIT_GUIDE.md - Git workflow
 
 ---
 
-## 💡 Known Issues
+## ✅ All Features Implemented
+
+### Core Features (100%)
+- ✅ Interactive prompt with readline
+- ✅ Command history
+- ✅ Executable search via PATH
+- ✅ Absolute and relative paths
+- ✅ Quote handling (single and double)
+- ✅ Environment variable expansion
+- ✅ Exit status ($?)
+- ✅ Signal handling (Ctrl+C, Ctrl+D, Ctrl+\\)
+
+### Redirections (100%)
+- ✅ Input redirection (<)
+- ✅ Output redirection (>)
+- ✅ Append mode (>>)
+- ✅ Heredoc (<<)
+- ✅ Multiple redirects per command
+
+### Pipes (100%)
+- ✅ Single pipe (cmd1 | cmd2)
+- ✅ Multiple pipes (cmd1 | cmd2 | cmd3 | ...)
+- ✅ Pipe with redirects
+- ✅ Pipe with builtins
+
+### Logical Operators (100%)
+- ✅ AND operator (&&)
+- ✅ OR operator (||)
+- ✅ Short-circuit evaluation
+- ✅ Complex logical chains
+
+### Builtins (100%)
+- ✅ echo (with -n option)
+- ✅ cd (with relative/absolute path, HOME, -)
+- ✅ pwd (no options)
+- ✅ export (with validation)
+- ✅ unset
+- ✅ env (no options or arguments)
+- ✅ exit (with numeric argument)
+
+---
+
+## 💡 Known Behaviors (Not Issues)
 
 ### Memory Management
 - readline library shows "still reachable" memory (208KB) - this is internal to libreadline.so.8.1
 - No memory leaks in user code (0 bytes definitely lost)
 - Full analysis in MEMORY_LEAKS.md
 
-### Pending Features
-- Logical operators (&&, ||) not yet implemented
-- Redirections (<, >, >>) not yet implemented
-- 5 builtins incomplete (cd, echo, env, export, unset)
+### Out of Scope (Not Required)
+- Advanced redirections (>&, <&, file descriptors like 2>&1)
+- Loop constructs (for, while, until)
+- Subshells with parentheses ()
+- Command substitution $()
+- Wildcards (*, ?, [])
+- Background execution (&)
+- Job control (fg, bg, jobs)
 
 ---
 
-## 🚀 Future Enhancements (Optional)
+## 🚀 Optional Enhancements (Beyond Scope)
 
 ### Advanced Features
 - [ ] Subshells with parentheses ()

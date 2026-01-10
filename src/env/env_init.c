@@ -6,22 +6,12 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 17:54:58 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/02 18:13:02 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 16:49:47 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-/*
-** parse_env_string - Separa uma string "KEY=VALUE" em chave e valor
-** 
-** Parâmetros:
-**   env_str: string no formato "KEY=VALUE"
-**   key: ponteiro para armazenar a chave alocada
-**   value: ponteiro para armazenar o valor alocado
-**
-** Retorna: 1 em sucesso, 0 em falha
-*/
 static int	parse_env_string(char *env_str, char **key, char **value)
 {
 	char	*equal_sign;
@@ -46,12 +36,6 @@ static int	parse_env_string(char *env_str, char **key, char **value)
 	return (1);
 }
 
-/*
-** increment_shlvl - Incrementa a variável SHLVL quando a shell inicia
-**
-** SHLVL indica o nível de profundidade da shell (quantas shells aninhadas)
-** Se não existir, define como "1"
-*/
 static void	increment_shlvl(t_env *env)
 {
 	char	*shlvl_str;

@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 18:43:44 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 14:33:15 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/10 16:28:38 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ static void	print_sorted_env(t_env *env)
 	}
 }
 
-static void	valid_identifier(char **key, char **arg)
+static int	valid_identifier(char **key, char **arg)
 {
 	if (is_valid_identifier(*key))
-		return ;
+		return (1);
 	ft_printf("minishell: export: `%s': not a valid identifier\n", *arg);
 	free(*key);
+	*key = NULL;
+	return (0);
 }
 
 static int	process_export_arg(char *arg, t_env *env)
@@ -44,7 +46,8 @@ static int	process_export_arg(char *arg, t_env *env)
 	key = ft_substr(arg, 0, equal_sign - arg);
 	if (!key)
 		return (1);
-	valid_identifier(&key, &arg);
+	if (!valid_identifier(&key, &arg))
+		return (1);
 	value = ft_strdup(equal_sign + 1);
 	if (!value)
 	{
