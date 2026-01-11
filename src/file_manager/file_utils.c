@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:26:14 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 15:44:28 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:33:10 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,4 @@ int	validate_executable(char *path)
 	if (access(path, X_OK) == 0)
 		return (1);
 	return (0);
-}
-
-void	cache_executables(t_env *env)
-{
-	(void)env;
 }

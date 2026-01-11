@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:11:15 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/11 15:53:00 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:49:37 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,8 @@ void		parse_cleanup(t_ast_node *partial_tree, t_token *remaining_tokens);
 void		parse_error_node(char *msg, t_ast_node *node);
 void		parse_error_command(char *msg, t_command *cmd);
 void		empty_command_error(t_command *cmd);
-void		*parser_null_error(char *msg);
-void		parse_error_free(char *msg, void *ptr, void (*free_func)(void *));
-int			redirect_error(char *msg, t_token_type type, char *file);
 int			ambiguous_redirect_error(char *target);
 int			heredoc_limiter_error(char *delimiter);
-int			parser_false_error(char *message);
 
 /* Syntax helper checks */
 int			is_invalid_start_token(t_token *token);

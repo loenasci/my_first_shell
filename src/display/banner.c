@@ -6,15 +6,12 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:05 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/11 15:09:20 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:24:39 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-/*
-** Exibe o banner de inicialização do shell
-*/
 void	display_banner(void)
 {
 	ft_printf("\n");
