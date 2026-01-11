@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:17 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 14:02:03 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:56:27 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void			setup_signals_heredoc(void);
 /* ---------------signal utilities -------------------------*/
 
 void			handle_sigint(int sig);
-void			handle_sigquit(int sig);
 void			restore_signals_default(void);
 
 /* ---------------signal state management ------------------*/

@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:59 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/16 18:57:07 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:56:13 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,6 @@ void	handle_sigint(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-}
-
-void	handle_sigquit(int sig)
-{
-	(void)sig;
 }
 
 void	restore_signals_default(void)
