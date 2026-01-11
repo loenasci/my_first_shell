@@ -46,6 +46,7 @@ SRC +=	$(PARSER_UTILS_DIR)command_utils.c \
 		$(PARSER_UTILS_DIR)general_utils.c \
 		$(PARSER_UTILS_DIR)heredoc_utils.c \
 		$(PARSER_UTILS_DIR)heredoc_file_utils.c \
+		$(PARSER_UTILS_DIR)heredoc_expansion_utils.c \
 		$(PARSER_UTILS_DIR)node_utils.c \
 		$(PARSER_UTILS_DIR)redirect_utils.c \
 		$(PARSER_UTILS_DIR)parser_expansion.c \

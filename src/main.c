@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 18:16:29 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:28:29 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,52 @@ static void	process_input(char *input, t_env *env)
 	token_list_free(tokens);
 }
 
-static int	process_line(char *input, t_env *env)
+static int	process_line(char *input, t_env *env, int is_interactive)
 {
 	if (!input[0])
 		return (0);
-	add_history(input);
+	if (is_interactive)
+		add_history(input);
 	process_input(input, env);
 	handle_signal_after_execution();
 	ensure_newline_for_prompt();
 	return (env->should_exit);
 }
 
+static char	*read_input(void)
+{
+	char	*input;
+	size_t	len;
+
+	if (isatty(STDIN_FILENO))
+		return (readline(build_prompt()));
+	ft_printf("%s", build_prompt());
+	input = get_next_line(STDIN_FILENO);
+	if (input)
+	{
+		len = ft_strlen(input);
+		if (len > 0 && input[len - 1] == '\n')
+			input[len - 1] = '\0';
+	}
+	return (input);
+}
+
 static void	shell_loop(t_env *env)
 {
 	char	*input;
+	int		is_interactive;
 
+	is_interactive = isatty(STDIN_FILENO);
 	while (1)
 	{
-		input = readline(build_prompt());
+		input = read_input();
 		if (should_exit_shell(input))
 		{
 			ft_printf("exit\n");
 			break ;
 		}
 		handle_signal_after_readline(&input);
-		if (input && process_line(input, env))
+		if (input && process_line(input, env, is_interactive))
 		{
 			free(input);
 			break ;

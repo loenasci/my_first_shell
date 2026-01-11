@@ -6,18 +6,11 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:44:11 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/23 18:09:46 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:56:43 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
-
-int	should_expand_heredoc(char *delimiter)
-{
-	if (!delimiter)
-		return (0);
-	return (!has_quotes(delimiter[0]));
-}
 
 char	*clear_heredoc_delimiter(char *delimiter)
 {
@@ -50,39 +43,8 @@ char	*extract_var_name_heredoc(char *start, int *len)
 	return (var_name);
 }
 
-static char	*process_variable(char *line, int *i)
+void	write_line_to_pipe(int fd, char *line)
 {
-	char	*var_name;
-	char	*var_value;
-	int		var_len;
-
-	var_name = extract_var_name_heredoc(&line[*i + 1], &var_len);
-	var_value = expand_variable(var_name);
-	free(var_name);
-	*i += var_len + 1;
-	return (var_value);
-}
-
-char	*expand_heredoc_line(char *line)
-{
-	char	*result;
-	char	*var_value;
-	int		i;
-
-	if (!line || !needs_expansion(line))
-		return (ft_strdup(line));
-	result = ft_strdup("");
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '$' && line[i + 1] && is_var_char(line[i + 1]))
-		{
-			var_value = process_variable(line, &i);
-			result = join_and_free(result, var_value);
-			free(var_value);
-		}
-		else
-			result = join_char_and_free(result, line[i++]);
-	}
-	return (result);
+	write(fd, line, ft_strlen(line));
+	write(fd, "\n", 1);
 }

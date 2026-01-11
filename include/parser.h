@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:11:15 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 15:22:07 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:53:00 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ int			should_expand_heredoc(char *delimiter);
 char		*clear_heredoc_delimiter(char *delimiter);
 char		*extract_var_name_heredoc(char *start, int *len);
 char		*expand_heredoc_line(char *line);
+void		write_line_to_pipe(int fd, char *line);
+
+/* heredoc expansion utils */
+void		read_heredoc_content(int pipe_fd, char *delimiter,
+				char *clean_delim);
+char		*get_expanded_line(char *line, char *delimiter);
+char		*read_heredoc_line(void);
+int			is_delimiter_reached(char *line, char *clean_delim);
 
 /* heredoc processing */
 int			process_heredoc(char *delimiter);

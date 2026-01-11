@@ -16,7 +16,10 @@ test_command() {
     local input="$2"
     local expected="$3"
     
-    output=$(echo -e "$input" | $SHELL 2>&1 | grep -v "MY SHELL" | grep -v "Welcome" | grep -v "Type 'exit'" | grep -v "═" | grep -v "║" | grep -v "my_shell:~>" | grep -v "exit" | sed '/^$/d')
+    output=$(echo -e "$input\nexit" | NO_COLOR=1 $SHELL 2>&1 | \
+        sed 's/\[my_shell\]> //g' | \
+        grep -v "^exit$" | \
+        grep -v "^$")
     
     if echo "$output" | grep -q "$expected"; then
         echo -e "${GREEN}✓${NC} $test_name"

@@ -27,7 +27,7 @@ test_file_op() {
     local input="$2"
     local check_cmd="$3"
     
-    (cd "$TEST_DIR" && echo -e "$input" | $SHELL > /dev/null 2>&1)
+    (cd "$TEST_DIR" && echo -e "$input\nexit" | NO_COLOR=1 $SHELL > /dev/null 2>&1)
     
     if eval "$check_cmd"; then
         echo -e "${GREEN}✓${NC} $test_name"
@@ -46,7 +46,10 @@ test_output() {
     local input="$2"
     local expected="$3"
     
-    output=$(cd "$TEST_DIR" && echo -e "$input" | $SHELL 2>&1 | grep -v "MY SHELL" | grep -v "Welcome" | grep -v "Type 'exit'" | grep -v "═" | grep -v "║" | grep -v "exit" | grep -v "^\[my_shell\]>" | grep -v "^>" | sed '/^$/d')
+    output=$(cd "$TEST_DIR" && echo -e "$input\nexit" | NO_COLOR=1 $SHELL 2>&1 | \
+        sed 's/\[my_shell\]> //g' | \
+        grep -v "^exit$" | \
+        grep -v "^$")
     
     if echo "$output" | grep -qE "$expected"; then
         echo -e "${GREEN}✓${NC} $test_name"

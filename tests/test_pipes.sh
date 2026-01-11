@@ -40,10 +40,14 @@ test_pipe() {
     print_info "Command: $command"
     
     # Execute command in shell and capture output to file
-    echo -e "$command\nexit" | ../my_shell > /tmp/pipe_test_out.txt 2>&1
+    echo -e "$command\nexit" | NO_COLOR=1 ../my_shell > /tmp/pipe_test_out.txt 2>&1
     
-    # Extract only the output lines (between command and next prompt)
-    output=$(cat /tmp/pipe_test_out.txt | grep -A 100 "$command" | grep -v "$command" | grep -v "\[my_shell\]>" | grep -v "my_shell:~>" | grep -v "exit" | grep -v "^$" | grep -v "╔" | grep -v "║" | grep -v "╚" | grep -v "MY SHELL" | grep -v "Welcome" | grep -v "Type" | head -20)
+    # Extract only the output lines
+    output=$(cat /tmp/pipe_test_out.txt | \
+        sed 's/\[my_shell\]> //g' | \
+        grep -v "^exit$" | \
+        grep -v "^$" | \
+        head -20)
     
     if [ "$check_type" = "output" ]; then
         # Check if output contains expected string

@@ -6,56 +6,36 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 17:23:50 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 13:57:56 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 15:54:54 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
 
-static void	write_line_to_pipe(int fd, char *line)
+char	*read_heredoc_line(void)
 {
-	write(fd, line, ft_strlen(line));
-	write(fd, "\n", 1);
+	char	*line;
+	size_t	len;
+
+	if (isatty(STDIN_FILENO))
+		return (readline("> "));
+	ft_printf("> ");
+	line = get_next_line(STDIN_FILENO);
+	if (!line)
+		return (NULL);
+	len = ft_strlen(line);
+	if (len > 0 && line[len - 1] == '\n')
+		line[len - 1] = '\0';
+	return (line);
 }
 
-static char	*get_expanded_line(char *line, char *delimiter)
-{
-	if (should_expand_heredoc(delimiter))
-		return (expand_heredoc_line(line));
-	else
-		return (line);
-}
-
-static int	is_delimiter_reached(char *line, char *clean_delim)
+int	is_delimiter_reached(char *line, char *clean_delim)
 {
 	if (!line)
 		return (1);
 	if (ft_strcmp(line, clean_delim) == 0)
 		return (1);
 	return (0);
-}
-
-static void	read_heredoc_content(int pipe_fd, char *delimiter,
-	char *clean_delim)
-{
-	char	*line;
-	char	*expanded;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (is_delimiter_reached(line, clean_delim))
-		{
-			if (line)
-				free(line);
-			break ;
-		}
-		expanded = get_expanded_line(line, delimiter);
-		write_line_to_pipe(pipe_fd, expanded);
-		if (expanded != line)
-			free(expanded);
-		free(line);
-	}
 }
 
 int	process_heredoc(char *delimiter)

@@ -19,7 +19,8 @@ t_env	*init_shell(char **envp)
 	env = init_env(envp);
 	if (!env)
 		return (NULL);
-	display_banner();
+	if (isatty(STDIN_FILENO))
+		display_banner();
 	return (env);
 }
 

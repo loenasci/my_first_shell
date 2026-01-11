@@ -16,7 +16,11 @@ test_builtin() {
     local input="$2"
     local expected="$3"
     
-    output=$(echo -e "$input" | $SHELL 2>&1 | grep -v "MY SHELL" | grep -v "Welcome" | grep -v "Type 'exit'" | grep -v "═" | grep -v "║" | grep -v "my_shell:~>" | grep -v "exit" | sed '/^$/d')
+    # Executa e remove prompts e exit
+    output=$(echo -e "$input\nexit" | NO_COLOR=1 $SHELL 2>&1 | \
+        sed 's/\[my_shell\]> //g' | \
+        grep -v "^exit$" | \
+        grep -v "^$")
     
     if echo "$output" | grep -q "$expected"; then
         echo -e "${GREEN}✓${NC} $test_name"
@@ -60,7 +64,7 @@ echo ""
 
 # PWD Tests
 echo -e "${BLUE}PWD Tests:${NC}"
-test_builtin "pwd - current directory" "pwd\nexit" "/my_shell/my_shell"
+test_builtin "pwd - current directory" "pwd\nexit" "tests"
 
 # ECHO Tests
 echo ""

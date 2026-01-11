@@ -77,35 +77,39 @@ echo -e "${BLUE}[7/15]${NC} Integration Tests"
 echo "========================================="
 run_suite "Integration Tests" "test_integration.sh"
 
-echo -e "${BLUE}[8/15]${NC} Builtin Commands Tests"
+echo -e "${BLUE}[8/16]${NC} Builtin Commands Tests"
 echo "========================================="
 run_suite "Builtin Tests" "test_builtins.sh"
 
-echo -e "${BLUE}[9/15]${NC} Redirection Tests"
+echo -e "${BLUE}[9/16]${NC} Echo Builtin Tests"
+echo "========================================="
+run_suite "Echo Tests" "test_echo.sh"
+
+echo -e "${BLUE}[10/16]${NC} Redirection Tests"
 echo "========================================="
 run_suite "Redirection Tests" "test_redirections.sh"
 
-echo -e "${BLUE}[10/15]${NC} Pipe Tests"
+echo -e "${BLUE}[11/16]${NC} Pipe Tests"
 echo "========================================="
 run_suite "Pipe Tests" "test_pipes.sh"
 
-echo -e "${BLUE}[11/15]${NC} External Commands Tests"
+echo -e "${BLUE}[12/16]${NC} External Commands Tests"
 echo "========================================="
 run_suite "External Command Tests" "test_external_commands.sh"
 
-echo -e "${BLUE}[12/15]${NC} Logical Operators Tests"
+echo -e "${BLUE}[13/16]${NC} Logical Operators Tests"
 echo "========================================="
 run_suite "Logical Operators Tests" "test_logical.sh"
 
-echo -e "${BLUE}[13/15]${NC} Environment Variables Tests"
+echo -e "${BLUE}[14/16]${NC} Environment Variables Tests"
 echo "========================================="
 run_suite "Environment Variables Tests" "test_env_vars.sh"
 
-echo -e "${BLUE}[14/15]${NC} File Operations Tests"
+echo -e "${BLUE}[15/16]${NC} File Operations Tests"
 echo "========================================="
 run_suite "File Operations Tests" "test_files.sh"
 
-echo -e "${BLUE}[15/15]${NC} Segfault Detection Tests"
+echo -e "${BLUE}[16/16]${NC} Segfault Detection Tests"
 echo "========================================="
 run_suite "Segfault Tests" "test_segfault.sh"
 

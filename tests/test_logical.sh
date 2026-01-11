@@ -17,7 +17,11 @@ test_logical() {
     local expected="$3"
     
     # Get output in single line for pattern matching
-    output=$(echo -e "$input" | $SHELL 2>&1 | grep -v "MY SHELL" | grep -v "Welcome" | grep -v "Type 'exit'" | grep -v "═" | grep -v "║" | grep -v "exit" | grep -v "^\[my_shell\]>" | grep -v "^>" | sed '/^$/d' | tr '\n' ' ')
+    output=$(echo -e "$input\nexit" | NO_COLOR=1 $SHELL 2>&1 | \
+        sed 's/\[my_shell\]> //g' | \
+        grep -v "^exit$" | \
+        grep -v "^$" | \
+        tr '\n' ' ')
     
     if echo "$output" | grep -qE "$expected"; then
         echo -e "${GREEN}✓${NC} $test_name"
@@ -37,7 +41,11 @@ test_no_output() {
     local input="$2"
     local forbidden="$3"
     
-    output=$(echo -e "$input" | $SHELL 2>&1 | grep -v "MY SHELL" | grep -v "Welcome" | grep -v "Type 'exit'" | grep -v "═" | grep -v "║" | grep -v "exit" | grep -v "^\[my_shell\]>" | grep -v "^>" | sed '/^$/d' | tr '\n' ' ')
+    output=$(echo -e "$input\nexit" | NO_COLOR=1 $SHELL 2>&1 | \
+        sed 's/\[my_shell\]> //g' | \
+        grep -v "^exit$" | \
+        grep -v "^$" | \
+        tr '\n' ' ')
     
     if ! echo "$output" | grep -q "$forbidden"; then
         echo -e "${GREEN}✓${NC} $test_name"

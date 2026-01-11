@@ -102,11 +102,9 @@ echo -e "${BLUE}Heredoc (<<) Tests:${NC}"
 test_redirect "heredoc - basic" \
     "cat << EOF > $TEST_DIR/heredoc1.txt\nhello\nworld\nEOF\nexit" \
     "grep -q 'hello' $TEST_DIR/heredoc1.txt && grep -q 'world' $TEST_DIR/heredoc1.txt"
-
 test_redirect "heredoc - different delimiter" \
     "cat << END > $TEST_DIR/heredoc2.txt\ntest\nEND\nexit" \
     "grep -q 'test' $TEST_DIR/heredoc2.txt"
-
 test_redirect "heredoc - multiple lines" \
     "cat << MARKER > $TEST_DIR/heredoc3.txt\nline1\nline2\nline3\nMARKER\nexit" \
     "[ \$(cat $TEST_DIR/heredoc3.txt | wc -l) -eq 3 ]"
