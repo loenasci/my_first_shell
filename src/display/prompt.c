@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:56:21 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 18:19:13 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:04:01 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ensure_newline_for_prompt(void)
 {
 	if (!isatty(STDOUT_FILENO))
 		return ;
-	write(STDOUT_FILENO, CLEAN_LINE, 6);
+	write(STDOUT_FILENO, CLEAN_LINE, 5);
 }
 
 char	*build_prompt(void)

@@ -162,6 +162,7 @@ rm -f newfile*.txt
 rm -f tmpfile*.txt
 rm -f count.txt
 rm  -f file.txt
+rm  -f out.txt
 rm -f file
 rm -f a
 rm -f b

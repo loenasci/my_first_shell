@@ -6,7 +6,7 @@
 /*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 18:57:36 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 18:18:59 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:00:24 by lsarraci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define RL_COLOR_BOLD_BLUE		"\001\033[1;34m\002"
 
 # define CURSOR_ESCAPE			"\033[6n"
-# define CLEAN_LINE				"\r\033[K\n"
+# define CLEAN_LINE				"\r\033[K"
 
 /* Display functions */
 void				display_banner(void);
