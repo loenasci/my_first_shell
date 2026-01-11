@@ -40,7 +40,7 @@ void	read_heredoc_content(int pipe_fd, char *delimiter,
 
 	while (1)
 	{
-		line = read_heredoc_line();
+		line = read_line_with_prompt("> ");
 		if (is_delimiter_reached(line, clean_delim))
 		{
 			if (line)

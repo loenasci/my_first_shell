@@ -12,23 +12,6 @@
 
 #include "../../include/shell.h"
 
-char	*read_heredoc_line(void)
-{
-	char	*line;
-	size_t	len;
-
-	if (isatty(STDIN_FILENO))
-		return (readline("> "));
-	ft_printf("> ");
-	line = get_next_line(STDIN_FILENO);
-	if (!line)
-		return (NULL);
-	len = ft_strlen(line);
-	if (len > 0 && line[len - 1] == '\n')
-		line[len - 1] = '\0';
-	return (line);
-}
-
 int	is_delimiter_reached(char *line, char *clean_delim)
 {
 	if (!line)

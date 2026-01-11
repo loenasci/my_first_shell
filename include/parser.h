@@ -40,7 +40,6 @@ void		write_line_to_pipe(int fd, char *line);
 void		read_heredoc_content(int pipe_fd, char *delimiter,
 				char *clean_delim);
 char		*get_expanded_line(char *line, char *delimiter);
-char		*read_heredoc_line(void);
 int			is_delimiter_reached(char *line, char *clean_delim);
 
 /* heredoc processing */

@@ -48,6 +48,9 @@ int		get_exit_status(void);
 t_env	*init_shell(char **envp);
 void	cleanup_shell(t_env *env);
 
+/* Input utilities */
+char	*read_line_with_prompt(char *prompt);
+
 /* Shell signal utilities */
 int		check_signal_received(void);
 int		was_interrupted(void);

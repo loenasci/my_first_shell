@@ -49,24 +49,6 @@ static int	process_line(char *input, t_env *env, int is_interactive)
 	return (env->should_exit);
 }
 
-static char	*read_input(void)
-{
-	char	*input;
-	size_t	len;
-
-	if (isatty(STDIN_FILENO))
-		return (readline(build_prompt()));
-	ft_printf("%s", build_prompt());
-	input = get_next_line(STDIN_FILENO);
-	if (input)
-	{
-		len = ft_strlen(input);
-		if (len > 0 && input[len - 1] == '\n')
-			input[len - 1] = '\0';
-	}
-	return (input);
-}
-
 static void	shell_loop(t_env *env)
 {
 	char	*input;
@@ -75,7 +57,7 @@ static void	shell_loop(t_env *env)
 	is_interactive = isatty(STDIN_FILENO);
 	while (1)
 	{
-		input = read_input();
+		input = read_line_with_prompt(build_prompt());
 		if (should_exit_shell(input))
 		{
 			ft_printf("exit\n");

@@ -83,7 +83,8 @@ SRC += $(DEBUG_DIR)lexer_debug.c \
 UTILS_DIR = utils/
 SRC += $(UTILS_DIR)exit_status.c \
 	   $(UTILS_DIR)shell_init.c \
-	   $(UTILS_DIR)shell_signals.c
+	   $(UTILS_DIR)shell_signals.c \
+	   $(UTILS_DIR)input_utils.c
 
 ENV_DIR = env/
 SRC += $(ENV_DIR)env_conversion.c \
