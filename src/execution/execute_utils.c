@@ -79,12 +79,12 @@ char	*define_executable(t_command *cmd, t_env *env)
 {
 	char	*executable;
 
-	if (is_directory(cmd->args[0]))
-	{
-		ft_printf("%s: is a directory\n", cmd->args[0]);
-		return (NULL);
-	}
 	executable = find_executable(cmd->args[0], env);
+	if (executable == (char *)-1)
+	{
+		ft_printf("%s: Permission denied\n", cmd->args[0]);
+		return ((char *)-1);
+	}
 	if (!executable)
 	{
 		ft_printf("%s: command not found\n", cmd->args[0]);
