@@ -79,6 +79,11 @@ char	*define_executable(t_command *cmd, t_env *env)
 {
 	char	*executable;
 
+	if (is_directory(cmd->args[0]))
+	{
+		ft_printf("%s: is a directory\n", cmd->args[0]);
+		return (NULL);
+	}
 	executable = find_executable(cmd->args[0], env);
 	if (!executable)
 	{

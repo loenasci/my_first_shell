@@ -44,6 +44,8 @@ static char	*check_direct_path(char *cmd)
 {
 	if (ft_strchr(cmd, '/'))
 	{
+		if (is_directory(cmd))
+			return (NULL);
 		if (validate_executable(cmd))
 			return (ft_strdup(cmd));
 		return (NULL);
