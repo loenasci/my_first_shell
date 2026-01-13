@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 19:12:19 by lsarraci          #+#    #+#             */
-/*   Updated: 2025/12/22 19:28:25 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:00:20 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_special_var(char *var_name)
 char	*expand_special_var(char *var_name)
 {
 	if (ft_strncmp(var_name, "?", 2) == 0)
-		return (ft_itoa(get_exit_status()));
+		return (ft_strdup("${?}"));
 	if (ft_strncmp(var_name, "$", 2) == 0)
 		return (ft_itoa(getpid()));
 	if (ft_strncmp(var_name, "0", 2) == 0)

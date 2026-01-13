@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:11:15 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/11 16:49:37 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:37:53 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			setup_heredoc(t_redirect *redir);
 void		close_heredoc_fd(t_redirect *redir);
 void		cleanup_heredoc_fds(t_redirect *redir);
 int			process_all_heredocs(t_command *cmd);
+void		process_heredoc_line(int pipe_fd, char *line, char *delimiter);
 
 /* environment variable setting*/
 
@@ -104,6 +105,7 @@ void		node_free(t_ast_node *node);
 
 /* General utility functions (used across multiple modules) */
 char		*join_and_free(char *s1, char *s2);
+char		*join_and_free_both(char *s1, char *s2);
 char		*join_char_and_free(char *s, char c);
 int			has_quotes(char c);
 int			is_var_char(char c);
@@ -112,6 +114,8 @@ int			needs_expansion(char *str);
 /* Expansion functions */
 char		*expand_variable(char *var_name);
 char		*expand_word(t_word_part *parts);
+char		*expand_in_double_quotes_partial(char *str);
+char		*get_heredoc_delimiter(t_word_part *parts);
 
 /* special variables */
 int			is_special_var(char *var_name);

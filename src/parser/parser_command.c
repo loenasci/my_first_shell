@@ -3,21 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   parser_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:28:26 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/05 14:33:59 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:44:01 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/shell.h"
+
+static char	*build_var_literal(char *var_name)
+{
+	char	*tmp;
+	char	*result;
+
+	tmp = ft_strjoin("${", var_name);
+	result = ft_strjoin(tmp, "}");
+	free(tmp);
+	return (result);
+}
+
+static char	*build_literal_word(t_word_part *parts)
+{
+	char	*result;
+
+	result = ft_strdup("");
+	while (parts)
+	{
+		if (parts->type == PART_LITERAL)
+			result = join_and_free_both(result, ft_strdup(parts->content));
+		else if (parts->type == PART_SINGLE_QUOTE)
+		{
+			result = join_and_free_both(result, ft_strdup("'"));
+			result = join_and_free_both(result, ft_strdup(parts->content));
+			result = join_and_free_both(result, ft_strdup("'"));
+		}
+		else if (parts->type == PART_DOUBLE_QUOTE)
+			result = join_and_free_both(result, ft_strdup(parts->content));
+		else if (parts->type == PART_VARIABLE)
+			result = join_and_free_both(result,
+					build_var_literal(parts->content));
+		parts = parts->next;
+	}
+	return (result);
+}
 
 static int	process_word(t_command *cmd, t_token *token)
 {
 	char	*expanded;
 	int		has_quotes;
 
-	expanded = expand_word(token->parts);
+	expanded = build_literal_word(token->parts);
 	if (!expanded)
 		return (0);
 	has_quotes = has_literal_quote(token->parts);

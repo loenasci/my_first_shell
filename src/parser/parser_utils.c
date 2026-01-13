@@ -82,7 +82,10 @@ int	handle_redirect(t_command *cmd, t_token **tokens)
 	*tokens = (*tokens)->next;
 	if (!*tokens || (*tokens)->type != TOKEN_WORD)
 		return (0);
-	file = expand_word((*tokens)->parts);
+	if (type == TOKEN_HEREDOC)
+		file = get_heredoc_delimiter((*tokens)->parts);
+	else
+		file = expand_word((*tokens)->parts);
 	if (!has_valid_redirect_target(type, file))
 	{
 		if (type == TOKEN_HEREDOC)

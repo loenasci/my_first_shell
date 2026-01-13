@@ -6,7 +6,7 @@
 /*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 15:51:01 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/13 14:57:04 by loda-sil         ###   ########.fr       */
+/*   Updated: 2026/01/13 17:11:56 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,20 @@ static char	*process_variable(char *line, int *i)
 	return (var_value);
 }
 
-int	should_expand_heredoc(char *delimiter)
+void	process_heredoc_line(int pipe_fd, char *line, char *delimiter)
 {
-	if (!delimiter)
-		return (0);
-	return (!has_quotes(delimiter[0]));
+	char	*expanded;
+
+	expanded = get_expanded_line(line, delimiter);
+	write_line_to_pipe(pipe_fd, expanded);
+	if (expanded != line)
+		free(expanded);
 }
 
 void	read_heredoc_content(int pipe_fd, char *delimiter,
 	char *clean_delim)
 {
 	char			*line;
-	char			*expanded;
 	t_signal_state	*state;
 
 	state = get_signal_state();
@@ -53,14 +55,10 @@ void	read_heredoc_content(int pipe_fd, char *delimiter,
 		}
 		if (is_delimiter_reached(line, clean_delim))
 		{
-			if (line)
-				free(line);
+			free(line);
 			break ;
 		}
-		expanded = get_expanded_line(line, delimiter);
-		write_line_to_pipe(pipe_fd, expanded);
-		if (expanded != line)
-			free(expanded);
+		process_heredoc_line(pipe_fd, line, delimiter);
 		free(line);
 	}
 }

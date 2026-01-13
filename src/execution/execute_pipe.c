@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 14:56:26 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/08 19:04:57 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:47:31 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 static void	execute_in_child(t_ast_node *node, t_env *env)
 {
-	char	*executable;
-	char	**envp;
+	char	*exec;
+	char	**args;
 
 	set_exit(node, env);
 	if (!apply_redirects(node->cmd))
 		exit(1);
-	executable = find_executable(node->cmd->args[0], env);
-	if (!executable)
+	args = expand_args_runtime(node->cmd->args);
+	if (!args)
+		exit(1);
+	exec = find_executable(args[0], env);
+	if (exec == (char *)-1)
+		pipe_exit_with(args, "Permission denied", 126);
+	if (!exec)
 	{
-		ft_printf("%s: command not found\n", node->cmd->args[0]);
-		exit(127);
+		if (ft_strchr(args[0], '/') && is_directory(args[0]))
+			pipe_exit_with(args, "Is a directory", 126);
+		pipe_exit_with(args, "command not found", 127);
 	}
-	envp = env_to_array(env);
-	if (!envp)
-		free_exec_and_exit(executable);
-	execve(executable, node->cmd->args, envp);
-	ft_printf("%s: execution failed\n", node->cmd->args[0]);
-	free_env_array(envp);
-	free(executable);
-	exit(126);
+	do_pipe_execve(args, exec, env);
 }
 
 static void	setup_left_child(int *pipe_fds, t_ast_node *node, t_env *env)

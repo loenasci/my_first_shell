@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:44:11 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/11 15:56:43 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/13 18:46:21 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ void	write_line_to_pipe(int fd, char *line)
 {
 	write(fd, line, ft_strlen(line));
 	write(fd, "\n", 1);
+}
+
+int	should_expand_heredoc(char *delimiter)
+{
+	if (!delimiter)
+		return (0);
+	return (!has_quotes(delimiter[0]));
 }

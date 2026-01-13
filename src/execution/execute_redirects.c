@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirects.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsarraci <lsarraci@student.42.fr>          +#+  +:+       +#+        */
+/*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 15:37:29 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/10 14:20:04 by lsarraci         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:26:27 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,17 @@ int	apply_redirects(t_command *cmd)
 	return (1);
 }
 
-int	execute_redirects(t_command *command, int fd, t_env *env)
+int	execute_redirects(t_command *command, int fd, t_env *env, char **expanded)
 {
-	int	saved_stdin;
-	int	saved_stdout;
-	int	exit_status;
+	int		saved_stdin;
+	int		saved_stdout;
+	int		exit_status;
+	char	**args_to_use;
 
+	if (expanded)
+		args_to_use = expanded;
+	else
+		args_to_use = command->args;
 	saved_stdin = dup(0);
 	if (saved_stdin < 0)
 		return (1);
@@ -79,6 +84,6 @@ int	execute_redirects(t_command *command, int fd, t_env *env)
 	resolve_fd(&fd);
 	if (!apply_redirects(command))
 		return (close_and_exit(saved_stdin, saved_stdout, 1));
-	exit_status = execute_builtin(command->args, env);
+	exit_status = execute_builtin(args_to_use, env);
 	return (close_and_exit(saved_stdin, saved_stdout, exit_status));
 }

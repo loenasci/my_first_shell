@@ -6,7 +6,7 @@
 /*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 16:22:34 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/12 02:23:08 by loda-sil         ###   ########.fr       */
+/*   Updated: 2026/01/13 18:55:10 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ int	main(int argc, char **argv, char **envp)
 	set_shell_env(env);
 	setup_signals_interactive();
 	shell_loop(env);
-	exit_code = env->exit_code;
+	if (env->should_exit)
+		exit_code = env->exit_code;
+	else
+		exit_code = env->last_exit_status;
 	rl_clear_history();
 	cleanup_shell(env);
 	reset_shell_env();

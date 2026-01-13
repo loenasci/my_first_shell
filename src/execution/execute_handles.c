@@ -46,9 +46,21 @@ static int	handle_redirect_only(t_command *cmd)
 
 static int	handle_builtin_commands(t_command *cmd, t_env *env)
 {
+	char	**expanded_args;
+	int		ret;
+
+	expanded_args = expand_args_runtime(cmd->args);
+	if (!expanded_args)
+		return (1);
 	if (cmd->redirects)
-		return (execute_redirects(cmd, -1, env));
-	return (execute_builtin(cmd->args, env));
+	{
+		ret = execute_redirects(cmd, -1, env, expanded_args);
+		ft_free_split(expanded_args);
+		return (ret);
+	}
+	ret = execute_builtin(expanded_args, env);
+	ft_free_split(expanded_args);
+	return (ret);
 }
 
 int	empty_handle_manager(t_command *cmd, t_env *env)

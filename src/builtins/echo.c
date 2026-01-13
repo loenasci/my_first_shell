@@ -43,12 +43,12 @@ int	builtin_echo(char **args, t_env *env)
 	}
 	while (args[i])
 	{
-		ft_printf("%s", args[i]);
+		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1])
-			ft_printf(" ");
+			ft_putchar_fd(' ', STDOUT_FILENO);
 		i++;
 	}
 	if (newline)
-		ft_printf("\n");
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }

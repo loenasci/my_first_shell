@@ -6,7 +6,7 @@
 /*   By: loda-sil <loda-sil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 17:19:18 by lsarraci          #+#    #+#             */
-/*   Updated: 2026/01/12 02:31:19 by loda-sil         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:38:16 by loda-sil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,21 @@ char	*expand_in_double_quotes(char *str)
 			result = join_char_and_free(result, str[i]);
 			i++;
 		}
+	}
+	return (result);
+}
+
+char	*expand_in_double_quotes_partial(char *str)
+{
+	char	*result;
+	int		i;
+
+	result = ft_strdup("");
+	i = 0;
+	while (str[i])
+	{
+		result = join_char_and_free(result, str[i]);
+		i++;
 	}
 	return (result);
 }

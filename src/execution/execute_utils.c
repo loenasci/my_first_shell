@@ -87,6 +87,11 @@ char	*define_executable(t_command *cmd, t_env *env)
 	}
 	if (!executable)
 	{
+		if (ft_strchr(cmd->args[0], '/') && is_directory(cmd->args[0]))
+		{
+			ft_printf("%s: Is a directory\n", cmd->args[0]);
+			return ((char *)-2);
+		}
 		ft_printf("%s: command not found\n", cmd->args[0]);
 		return (NULL);
 	}
